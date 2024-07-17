@@ -76,7 +76,7 @@ def analyze_responsibility(case_info):
     return responsibility_ana
 
 def get_penalty_instruction(case_info):
-    with open('reference/punishment-mapping.json') as f:
+    with open('reference/punishment-mapping.json', encoding='utf-8') as f:
         punish_refer = json.load(f)
     closest_match = difflib.get_close_matches(case_info["crime"], punish_refer.keys(), n=1, cutoff=0.7)
     instruction = punish_refer[closest_match[0]] if closest_match else ""
