@@ -12,7 +12,7 @@ import sys
 import os
 
 # 指定使用的 CUDA 设备
-os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+os.environ["CUDA_VISIBLE_DEVICES"] = "9"
 
 
 # 文本预处理
@@ -55,7 +55,7 @@ def process_func(example):
     
     # 构建指令和输入文本的序列
     instruction_text = (
-        f"<|system|>\n你是一个法律命名实体识别的专家。请根据给定文本，从以下十个方面（犯罪嫌疑人、受害人、被盗货币、物品价值、盗窃获利、被盗物品、作案工具、时间、地点、组织机构）提取文中的实体，没有用None表示，并按照以下格式返回结果：[犯罪嫌疑人: xxx; 受害人： xxx; 被盗货币： None; ……]<|endoftext|>\n<|user|>\n{example['input']}<|endoftext|>\n<|assistant|>\n",
+        f"<|system|>\n你是一个法律命名实体识别的专家。请根据给定文本，从以下十个方面（犯罪嫌疑人、受害人、被盗货币、物品价值、盗窃获利、被盗物品、作案工具、时间、地点、组织机构）提取文中的实体，没有用None表示，并按照以下格式返回结果：[犯罪嫌疑人: xxx; 受害人： xxx; 被盗货币： None; ……]<|endoftext|>\n<|user|>\n{example['input']}<|endoftext|>\n<|assistant|>\n"
     )
     
     # 对instruction进行tokenizer  不添加特殊的分词符
@@ -71,10 +71,10 @@ def process_func(example):
     # 构建用于模型输入的注意力掩码 (attention_mask) 序列
     attention_mask = instruction["attention_mask"] + response["attention_mask"] + [1]
 
-    ''' 这行代码的作用是构建模型训练时的目标输出标签 (labels) 列表。具体来说，它通过拼接不同部分来创建一个与 input_ids 长度一致的标签序列，其中：
-	•	指令部分用 -100 填充，表示这些位置的损失将被忽略。 huggingface中表示计算损失忽略这一部分的内容
-	•	响应部分用实际的 token IDs 填充。
-	•	最后添加一个 tokenizer.pad_token_id，与 input_ids 对应。'''
+    # 这行代码的作用是构建模型训练时的目标输出标签 (labels) 列表。具体来说，它通过拼接不同部分来创建一个与 input_ids 长度一致的标签序列，其中：
+	# •	指令部分用 -100 填充，表示这些位置的损失将被忽略。 huggingface中表示计算损失忽略这一部分的内容
+	# •	响应部分用实际的 token IDs 填充。
+	# •	最后添加一个 tokenizer.pad_token_id，与 input_ids 对应。
     labels = [-100] * len(instruction["input_ids"]) + response["input_ids"] + [tokenizer.pad_token_id]
     
     # 截断处理
@@ -92,7 +92,7 @@ def predict(messages, model, tokenizer):
     else:
         print("CUDA is unavailable")
         sys.exit(1)
-
+    # device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     # 使用聊天模式
     text = tokenizer.apply_chat_template(
         messages,
@@ -118,22 +118,27 @@ def predict(messages, model, tokenizer):
     return response
 
 
-
-# Transformers加载模型权重
-tokenizer = AutoTokenizer.from_pretrained("../GLM-4-9B-Chat", use_fast=False, trust_remote_code=True)
-model = AutoModelForCausalLM.from_pretrained("../GLM-4-9B-Chat", device_map="auto", torch_dtype=torch.bfloat16, trust_remote_code=True)
 '''
 •	model.enable_input_require_grads()：这是一个启用模型输入梯度的方法。在某些情况下，如使用梯度检查点（Gradient Checkpointing）时，需要启用输入梯度计算。
 •	梯度检查点是一种节省显存的方法，尤其在处理大模型时。它通过在前向传播时存储一部分中间结果，减少显存使用，但在反向传播时需要重新计算这些中间结果。
 '''
-model.enable_input_require_grads()  # 开启梯度检查点时，要执行该方法
+# 本地模型路径
+local_model_path = "../GLM-4-9B-Chat"
+
+# Transformers加载本地模型权重
+tokenizer = AutoTokenizer.from_pretrained(local_model_path, use_fast=False, trust_remote_code=True)
+model = AutoModelForCausalLM.from_pretrained(local_model_path, device_map="auto", torch_dtype=torch.bfloat16, trust_remote_code=True)
+
+# 开启梯度检查点时，要执行该方法
+model.enable_input_require_grads()
+
 
 # 加载、处理数据集和测试集
 train_dataset_path = "./data/law/NER.jsonl"
 test_dataset_path = "./data/law/NER.jsonl"
 
-train_jsonl_new_path = "./data/law/NER_train.jsonl"
-test_jsonl_new_path = "./data/law/NER_test.jsonl"
+train_jsonl_new_path = "./data/law/NER_train_1.jsonl"
+test_jsonl_new_path = "./data/law/NER_test_1.jsonl"
 
 if not os.path.exists(train_jsonl_new_path):
     dataset_jsonl_transfer(train_dataset_path, train_jsonl_new_path)
