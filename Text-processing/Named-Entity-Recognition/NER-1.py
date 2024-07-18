@@ -5,7 +5,7 @@ import os
 import ast
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "8"
-CUDA_VISIBLE_DEVICES="8"
+
 
 def predict(messages, model, tokenizer, device):
     text = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
@@ -29,11 +29,11 @@ def remove_duplicates(data):
     return unique_data
 
 # Load tokenizer and base model
-tokenizer = AutoTokenizer.from_pretrained("/home/yuwenhan/law-LLM/buaa&zgzf/finetune/ZhipuAI/glm-4-9b-chat/", use_fast=False, trust_remote_code=True)
-model = AutoModelForCausalLM.from_pretrained("/home/yuwenhan/law-LLM/buaa&zgzf/finetune/ZhipuAI/glm-4-9b-chat/", device_map="auto", torch_dtype=torch.bfloat16, trust_remote_code=True)
+tokenizer = AutoTokenizer.from_pretrained("../../GLM-4-9B-Chat", use_fast=False, trust_remote_code=True)
+model = AutoModelForCausalLM.from_pretrained("../../GLM-4-9B-Chat", device_map="auto", torch_dtype=torch.bfloat16, trust_remote_code=True)
 
 # Load the fine-tuned Lora model
-model = PeftModel.from_pretrained(model, model_id="/home/yuwenhan/law-LLM/buaa&zgzf/finetune/output/GLM4-NER-2/checkpoint-200")
+model = PeftModel.from_pretrained(model, model_id="../../finetune/output/GLM4-NER-2/checkpoint-200")
 
 # 确定使用的设备
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
