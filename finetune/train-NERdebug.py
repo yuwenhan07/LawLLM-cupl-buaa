@@ -14,26 +14,22 @@ import os
 # 指定使用的 CUDA 设备
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
-
-# 文本预处理
 def dataset_jsonl_transfer(origin_path, new_path):
     """
     将原始数据集转换为大模型微调所需数据格式的新数据集
     """
-    # 设定一个messages储存每一条文本
     messages = []
 
-    # 读取旧的JSONL文件【注：使用jsonl文件，对每一行进行处理】
+    # 读取旧的JSONL文件
     with open(origin_path, "r") as file:
         for line in file:
-            # 解析每一行的json数据  具体处理方式根据内容所决定
+            # 解析每一行的json数据
             data = json.loads(line)
             context = data["context"]
             NER = data["entities"]
-            # 此处设定instruction作为指令微调的指令
             message = {
                     "instruction": """你是一个法律命名实体识别的专家。请根据给定文本，从以下十个方面（犯罪嫌疑人、受害人、被盗货币、物品价值、盗窃获利、被盗物品、作案工具、时间、地点、组织机构）提取文中的实体，没有用None表示，并按照以下格式返回结果：[犯罪嫌疑人: xxx; 受害人： xxx; 被盗货币： None; ……]。""",
-                    "input": f"法律文本: \"{context}\"",
+                    "input": f"文本: \"{context}\"",
                     "output": NER
             }
             messages.append(message)
@@ -43,23 +39,20 @@ def dataset_jsonl_transfer(origin_path, new_path):
         for message in messages:
             file.write(json.dumps(message, ensure_ascii=False) + "\n")
 
-# 数据集预处理函数            
 def process_func(example):
     """
     将数据集进行预处理
     """
-    # 超参数，定义输入序列和响应序列的总长度
-    MAX_LENGTH = 512
-    # 初始化空列表，用于存储 input_ids（输入 ID）、attention_mask（注意力掩码）和 labels（标签）
+    MAX_LENGTH = 384 
     input_ids, attention_mask, labels = [], [], []
     
     # 构建指令和输入文本的序列
     instruction_text = (
-        f"<|system|>\n你是一个法律命名实体识别的专家。请根据给定文本，从以下十个方面（犯罪嫌疑人、受害人、被盗货币、物品价值、盗窃获利、被盗物品、作案工具、时间、地点、组织机构）提取文中的实体，没有用None表示，并按照以下格式返回结果：[犯罪嫌疑人: xxx; 受害人： xxx; 被盗货币： None; ……]<|endoftext|>\n<|user|>\n{example['input']}<|endoftext|>\n<|assistant|>\n",
+        """你是一个法律命名实体识别的专家。请根据给定文本，从以下十个方面（犯罪嫌疑人、受害人、被盗货币、物品价值、盗窃获利、被盗物品、作案工具、时间、地点、组织机构）提取文中的实体，没有用None表示，并按照以下格式返回结果：[犯罪嫌疑人: xxx; 受害人： xxx; 被盗货币： None; ……]"""
+        f"{example['input']}\n\n"
     )
     
-    # 对instruction进行tokenizer  不添加特殊的分词符
-    # tokenizer 是一个用于将文本转换为模型输入格式的工具。具体来说，它将输入文本转换为 token ids 和注意力掩码，以便模型可以理解和处理这些文本。
+    # 对instruction进行tokenizer
     instruction = tokenizer(instruction_text, add_special_tokens=False)
     
     # 对response进行tokenizer
@@ -67,14 +60,7 @@ def process_func(example):
     
     # 构建input_ids，attention_mask和labels
     input_ids = instruction["input_ids"] + response["input_ids"] + [tokenizer.pad_token_id]
-
-    # 构建用于模型输入的注意力掩码 (attention_mask) 序列
     attention_mask = instruction["attention_mask"] + response["attention_mask"] + [1]
-
-    ''' 这行代码的作用是构建模型训练时的目标输出标签 (labels) 列表。具体来说，它通过拼接不同部分来创建一个与 input_ids 长度一致的标签序列，其中：
-	•	指令部分用 -100 填充，表示这些位置的损失将被忽略。 huggingface中表示计算损失忽略这一部分的内容
-	•	响应部分用实际的 token IDs 填充。
-	•	最后添加一个 tokenizer.pad_token_id，与 input_ids 对应。'''
     labels = [-100] * len(instruction["input_ids"]) + response["input_ids"] + [tokenizer.pad_token_id]
     
     # 截断处理
@@ -85,15 +71,8 @@ def process_func(example):
     
     return {"input_ids": input_ids, "attention_mask": attention_mask, "labels": labels}
 
-# 生成结果函数
 def predict(messages, model, tokenizer):
-    if torch.cuda.is_available():
-        device = torch.device("cuda" )
-    else:
-        print("CUDA is unavailable")
-        sys.exit(1)
-
-    # 使用聊天模式
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     text = tokenizer.apply_chat_template(
         messages,
         tokenize=False,
@@ -101,7 +80,6 @@ def predict(messages, model, tokenizer):
     )
     model_inputs = tokenizer([text], return_tensors="pt").to(device)
 
-    # 生成响应
     generated_ids = model.generate(
         model_inputs.input_ids,
         max_new_tokens=512
@@ -110,30 +88,28 @@ def predict(messages, model, tokenizer):
         output_ids[len(input_ids):] for input_ids, output_ids in zip(model_inputs.input_ids, generated_ids)
     ]
     
-    # 解码响应结果
     response = tokenizer.batch_decode(generated_ids, skip_special_tokens=True)[0]
     
     print(response)
      
     return response
 
+# 本地模型路径
+local_model_path = "../GLM-4-9B-Chat"
 
+# Transformers加载本地模型权重
+tokenizer = AutoTokenizer.from_pretrained(local_model_path, use_fast=False, trust_remote_code=True)
+model = AutoModelForCausalLM.from_pretrained(local_model_path, device_map="auto", torch_dtype=torch.bfloat16, trust_remote_code=True)
 
-# Transformers加载模型权重
-tokenizer = AutoTokenizer.from_pretrained("../GLM-4-9B-Chat", use_fast=False, trust_remote_code=True)
-model = AutoModelForCausalLM.from_pretrained("../GLM-4-9B-Chat", device_map="auto", torch_dtype=torch.bfloat16, trust_remote_code=True)
-'''
-•	model.enable_input_require_grads()：这是一个启用模型输入梯度的方法。在某些情况下，如使用梯度检查点（Gradient Checkpointing）时，需要启用输入梯度计算。
-•	梯度检查点是一种节省显存的方法，尤其在处理大模型时。它通过在前向传播时存储一部分中间结果，减少显存使用，但在反向传播时需要重新计算这些中间结果。
-'''
-model.enable_input_require_grads()  # 开启梯度检查点时，要执行该方法
+# 开启梯度检查点时，要执行该方法
+model.enable_input_require_grads()
 
 # 加载、处理数据集和测试集
 train_dataset_path = "./data/law/NER.jsonl"
 test_dataset_path = "./data/law/NER.jsonl"
 
-train_jsonl_new_path = "./data/law/NER_train.jsonl"
-test_jsonl_new_path = "./data/law/NER_test.jsonl"
+train_jsonl_new_path = "./data/law/NER_train_3.jsonl"
+test_jsonl_new_path = "./data/law/NER_test_3.jsonl"
 
 if not os.path.exists(train_jsonl_new_path):
     dataset_jsonl_transfer(train_dataset_path, train_jsonl_new_path)

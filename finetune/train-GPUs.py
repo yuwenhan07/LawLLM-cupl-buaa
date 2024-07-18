@@ -10,7 +10,7 @@ import os
 import swanlab
 
 # 指定只使用 CUDA 设备 0 和 1
-os.environ["CUDA_VISIBLE_DEVICES"] = "3,4,5"
+os.environ["CUDA_VISIBLE_DEVICES"] = "0,1"
 
 def dataset_jsonl_transfer(origin_path, new_path):
     """
@@ -100,15 +100,14 @@ tokenizer = AutoTokenizer.from_pretrained("./ZhipuAI/glm-4-9b-chat/", use_fast=F
 model = AutoModelForCausalLM.from_pretrained("./ZhipuAI/glm-4-9b-chat/", device_map="auto", torch_dtype=torch.bfloat16, trust_remote_code=True)
 model.enable_input_require_grads()  # 开启梯度检查点时，要执行该方法
 
-# 包装模型以使用多个GPU
-model = torch.nn.DataParallel(model)
+
 
 # 加载、处理数据集和测试集
-train_dataset_path = "/home/yuwenhan/law-LLM/buaa/finetune/data/law/NER.jsonl"
-test_dataset_path = "/home/yuwenhan/law-LLM/buaa/finetune/data/law/NER.jsonl"
+train_dataset_path = "./data/law/NER.jsonl"
+test_dataset_path = "./data/law/NER.jsonl"
 
-train_jsonl_new_path = "/home/yuwenhan/law-LLM/buaa/finetune/data/law/NER_train_3.jsonl"
-test_jsonl_new_path = "/home/yuwenhan/law-LLM/buaa/finetune/data/law/NER_test_3.jsonl"
+train_jsonl_new_path = "./data/law/NER_train_3.jsonl"
+test_jsonl_new_path = "./data/law/NER_test_3.jsonl"
 
 if not os.path.exists(train_jsonl_new_path):
     dataset_jsonl_transfer(train_dataset_path, train_jsonl_new_path)

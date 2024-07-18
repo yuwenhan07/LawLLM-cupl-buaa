@@ -55,7 +55,8 @@ def process_func(example):
     
     # 构建指令和输入文本的序列
     instruction_text = (
-        f"<|system|>\n你是一个法律命名实体识别的专家。请根据给定文本，从以下十个方面（犯罪嫌疑人、受害人、被盗货币、物品价值、盗窃获利、被盗物品、作案工具、时间、地点、组织机构）提取文中的实体，没有用None表示，并按照以下格式返回结果：[犯罪嫌疑人: xxx; 受害人： xxx; 被盗货币： None; ……]<|endoftext|>\n<|user|>\n{example['input']}<|endoftext|>\n<|assistant|>\n",
+        """你是一个法律命名实体识别的专家。请根据给定文本，从以下十个方面（犯罪嫌疑人、受害人、被盗货币、物品价值、盗窃获利、被盗物品、作案工具、时间、地点、组织机构）提取文中的实体，没有用None表示，并按照以下格式返回结果：[犯罪嫌疑人: xxx; 受害人： xxx; 被盗货币： None; ……]"""
+        f"{example['context']}\n\n"
     )
     
     # 对instruction进行tokenizer  不添加特殊的分词符
@@ -118,40 +119,63 @@ def predict(messages, model, tokenizer):
     return response
 
 
+# 本地模型路径
+local_model_path = "../GLM-4-9B-Chat"
 
-# Transformers加载模型权重
-tokenizer = AutoTokenizer.from_pretrained("../GLM-4-9B-Chat", use_fast=False, trust_remote_code=True)
-model = AutoModelForCausalLM.from_pretrained("../GLM-4-9B-Chat", device_map="auto", torch_dtype=torch.bfloat16, trust_remote_code=True)
-'''
-•	model.enable_input_require_grads()：这是一个启用模型输入梯度的方法。在某些情况下，如使用梯度检查点（Gradient Checkpointing）时，需要启用输入梯度计算。
-•	梯度检查点是一种节省显存的方法，尤其在处理大模型时。它通过在前向传播时存储一部分中间结果，减少显存使用，但在反向传播时需要重新计算这些中间结果。
-'''
-model.enable_input_require_grads()  # 开启梯度检查点时，要执行该方法
+# Transformers加载本地模型权重
+tokenizer = AutoTokenizer.from_pretrained(local_model_path, use_fast=False, trust_remote_code=True)
+model = AutoModelForCausalLM.from_pretrained(local_model_path, device_map="auto", torch_dtype=torch.bfloat16, trust_remote_code=True)
 
-# 加载、处理数据集和测试集
-train_dataset_path = "./data/law/NER.jsonl"
-test_dataset_path = "./data/law/NER.jsonl"
+# 开启梯度检查点时，要执行该方法
+model.enable_input_require_grads()
 
+
+# 原始数据集路径
+dataset_path = "./data/law/NER.jsonl"
+
+# 新的训练集和测试集路径
 train_jsonl_new_path = "./data/law/NER_train.jsonl"
 test_jsonl_new_path = "./data/law/NER_test.jsonl"
 
-if not os.path.exists(train_jsonl_new_path):
-    dataset_jsonl_transfer(train_dataset_path, train_jsonl_new_path)
-if not os.path.exists(test_jsonl_new_path):
-    dataset_jsonl_transfer(test_dataset_path, test_jsonl_new_path)
+def split_dataset(origin_path, train_path, test_path, test_size=10):
+    """
+    将原始数据集拆分为训练集和测试集
+    """
+    # 读取原始JSONL文件
+    with open(origin_path, "r") as file:
+        lines = file.readlines()
+    
+    # 确定训练集和测试集的划分
+    train_lines = lines[:-test_size]
+    test_lines = lines[-test_size:]
+    
+    # 保存训练集
+    with open(train_path, "w", encoding="utf-8") as train_file:
+        for line in train_lines:
+            train_file.write(line)
+    
+    # 保存测试集
+    with open(test_path, "w", encoding="utf-8") as test_file:
+        for line in test_lines:
+            test_file.write(line)
 
-# 检查数据集文件是否为空
-if os.path.getsize(train_jsonl_new_path) == 0:
-    raise ValueError(f"Training dataset {train_jsonl_new_path} is empty.")
-if os.path.getsize(test_jsonl_new_path) == 0:
-    raise ValueError(f"Testing dataset {test_jsonl_new_path} is empty.")
+# 执行拆分操作
+split_dataset(dataset_path, train_jsonl_new_path, test_jsonl_new_path)
 
-# 得到训练集
+# 加载拆分后的数据集
 train_df = pd.read_json(train_jsonl_new_path, lines=True)
-if train_df.empty:
-    raise ValueError(f"Training DataFrame is empty.")
+test_df = pd.read_json(test_jsonl_new_path, lines=True)
+
+# 检查数据集
+print("训练集样本数:", len(train_df))
+print("测试集样本数:", len(test_df))
+
+
 train_ds = Dataset.from_pandas(train_df)
+print("训练集列名:", train_df.columns)
+print("测试集列名:", test_df.columns)
 train_dataset = train_ds.map(process_func, remove_columns=train_ds.column_names)
+
 
 # lora 配置
 config = LoraConfig(
@@ -175,34 +199,25 @@ config = LoraConfig(
 model = get_peft_model(model, config)
 
 args = TrainingArguments(
-    # 指定模型训练输出的目录。训练过程中生成的检查点和其他输出文件将保存到这个目录。
     output_dir="./output/GLM4-NER-3",
     per_device_train_batch_size=8,
-    # 梯度累积步骤数。模型在实际更新参数之前会累积 4 个批次的梯度，相当于有效批量大小为 8 * 4 = 32。这在显存有限的情况下尤为有用。
     gradient_accumulation_steps=4,
-    # 日志记录
     logging_steps=10,
-    # 训练轮次
     num_train_epochs=3,
-    # 保存检查点数量
     save_steps=50,
-    # 学习率。控制模型参数更新的步伐。设置为 0.0001，表示每次参数更新的步伐较小，这有助于模型稳定训练。
     learning_rate=1e-4,
-    # 是否在每个节点上保存检查点。在分布式训练中，这一参数确保在每个节点上都保存检查点。
     save_on_each_node=True,
-    # 是否启用梯度检查点。启用梯度检查点可以节省显存，但会增加计算开销。对于大模型，这通常是必要的，以避免显存不足。
     gradient_checkpointing=True,
-    # 指定日志报告的目标。设置为 "none"，表示不报告日志到外部工具，如 TensorBoard、WandB 等。
     report_to="none",
 )
 
 swanlab_callback = SwanLabCallback(
     project="GLM4-NER-fintune",
     experiment_name="GLM4-9B-Chat",
-    description="使用智谱GLM4-9B-Chat模型在法律命名实体识别数据集上微调。",
+    description="使用智谱GLM4-9B-Chat模型在zh_cls_fudan-news数据集上微调。",
     config={
-        "model": "GLM4-9B-Chat",
-        "dataset": "法律命名实体识别",
+        "model": "ZhipuAI/glm-4-9b-chat",
+        "dataset": "huangjintao/zh_cls_fudan-news",
     },
 )
 
