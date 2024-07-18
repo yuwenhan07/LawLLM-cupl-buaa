@@ -10,8 +10,8 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 device = "cuda"
 
 # 加载本地的GLM-4-9b-chat模型和tokenizer
-tokenizer = AutoTokenizer.from_pretrained("/home/yuwenhan/law-LLM/buaa&zgzf/finetune/ZhipuAI/glm-4-9b-chat", use_fast=False, trust_remote_code=True)
-model = AutoModelForCausalLM.from_pretrained("/home/yuwenhan/law-LLM/buaa&zgzf/finetune/ZhipuAI/glm-4-9b-chat", torch_dtype=torch.bfloat16, low_cpu_mem_usage=True, trust_remote_code=True).to(device).eval()
+tokenizer = AutoTokenizer.from_pretrained("../GLM-4-9B-Chat", use_fast=False, trust_remote_code=True)
+model = AutoModelForCausalLM.from_pretrained("../GLM-4-9B-Chat", torch_dtype=torch.bfloat16, low_cpu_mem_usage=True, trust_remote_code=True).to(device).eval()
 
 st.set_page_config(page_title="INSIGHT洞见", page_icon=":robot_face:", layout="wide")
 from itertools import islice

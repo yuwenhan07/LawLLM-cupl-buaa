@@ -18,8 +18,8 @@ def predict(messages, model, tokenizer):
 
 
 # 加载原下载路径的tokenizer和model
-tokenizer = AutoTokenizer.from_pretrained("./ZhipuAI/glm-4-9b-chat/", use_fast=False, trust_remote_code=True)
-model = AutoModelForCausalLM.from_pretrained("./ZhipuAI/glm-4-9b-chat/", device_map="auto", torch_dtype=torch.bfloat16)
+tokenizer = AutoTokenizer.from_pretrained("../GLM-4-9B-Chat", use_fast=False, trust_remote_code=True)
+model = AutoModelForCausalLM.from_pretrained("../GLM-4-9B-Chat", device_map="auto", torch_dtype=torch.bfloat16,trust_remote_code=True)
 
 # 加载训练好的Lora模型，将下面的checkpointXXX替换为实际的checkpoint文件名名称
 model = PeftModel.from_pretrained(model, model_id="./output/GLM4-NER-2/checkpoint-200")
