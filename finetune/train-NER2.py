@@ -1,3 +1,19 @@
+import os
+import logging
+import warnings
+
+# 抑制TensorFlow的日志
+os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
+
+# 设置Transformers的日志等级为ERROR
+logging.getLogger("transformers").setLevel(logging.ERROR)
+
+# 抑制警告
+warnings.filterwarnings("ignore")
+
+# 设置PyTorch的日志等级为ERROR
+logging.getLogger("torch").setLevel(logging.ERROR)
+
 import json
 import pandas as pd
 import torch
@@ -178,7 +194,6 @@ if not os.path.exists(train_jsonl_new_path):
     dataset_jsonl_transfer(train_dataset_path, train_jsonl_new_path)
 if not os.path.exists(test_jsonl_new_path):
     dataset_jsonl_transfer(test_dataset_path, test_jsonl_new_path)
-print('111111')
 
 # 检查数据集文件是否为空
 if os.path.getsize(train_jsonl_new_path) == 0:
