@@ -137,8 +137,8 @@ model.enable_input_require_grads()
 train_dataset_path = "./data/law/NER.jsonl"
 test_dataset_path = "./data/law/NER.jsonl"
 
-train_jsonl_new_path = "./data/law/NER_train_1.jsonl"
-test_jsonl_new_path = "./data/law/NER_test_1.jsonl"
+train_jsonl_new_path = "./data/law/NER_train.jsonl"
+test_jsonl_new_path = "./data/law/NER_test.jsonl"
 
 if not os.path.exists(train_jsonl_new_path):
     dataset_jsonl_transfer(train_dataset_path, train_jsonl_new_path)
