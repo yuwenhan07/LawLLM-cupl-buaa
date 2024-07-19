@@ -2,6 +2,9 @@ import os
 import logging
 import warnings
 
+# 指定使用的 CUDA 设备
+os.environ["CUDA_VISIBLE_DEVICES"] = "9"
+
 # 抑制TensorFlow的日志
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 
@@ -14,6 +17,8 @@ warnings.filterwarnings("ignore")
 # 设置PyTorch的日志等级为ERROR
 logging.getLogger("torch").setLevel(logging.ERROR)
 
+
+
 import json
 import pandas as pd
 import torch
@@ -22,13 +27,11 @@ from modelscope import snapshot_download, AutoTokenizer
 from swanlab.integration.huggingface import SwanLabCallback
 from peft import LoraConfig, TaskType, get_peft_model
 from transformers import AutoModelForCausalLM, TrainingArguments, Trainer, DataCollatorForSeq2Seq
-import os
 import swanlab
 import sys
-import os
 
-# 指定使用的 CUDA 设备
-os.environ["CUDA_VISIBLE_DEVICES"] = "9"
+
+
 
 
 # 文本预处理
@@ -104,7 +107,7 @@ def process_func(example):
 # 生成结果函数
 def predict(messages, model, tokenizer):
     if torch.cuda.is_available():
-        device = torch.device("cuda" )
+        device=torch.device("cuda:{}".format(0))
     else:
         print("CUDA is unavailable")
         sys.exit(1)
@@ -132,6 +135,8 @@ def predict(messages, model, tokenizer):
     print(response)
      
     return response
+
+
 
 def split_jsonl_file(input_path, train_output_path, test_output_path, num_test_samples=10):
     """
@@ -174,9 +179,15 @@ def split_jsonl_file(input_path, train_output_path, test_output_path, num_test_s
 # 本地模型路径
 local_model_path = "../GLM-4-9B-Chat"
 
-# Transformers加载本地模型权重
+# 加载本地模型权重并指定设备
+device=torch.device("cuda:{}".format(0))
 tokenizer = AutoTokenizer.from_pretrained(local_model_path, use_fast=False, trust_remote_code=True)
-model = AutoModelForCausalLM.from_pretrained(local_model_path, device_map="auto", torch_dtype=torch.bfloat16, trust_remote_code=True)
+model = AutoModelForCausalLM.from_pretrained(local_model_path, device_map={"": device}, torch_dtype=torch.bfloat16, trust_remote_code=True)
+model.to(device)
+
+# Transformers加载本地模型权重
+# tokenizer = AutoTokenizer.from_pretrained(local_model_path, use_fast=False, trust_remote_code=True)
+# model = AutoModelForCausalLM.from_pretrained(local_model_path, device_map="auto", torch_dtype=torch.bfloat16, trust_remote_code=True)
 
 # 开启梯度检查点时，要执行该方法
 model.enable_input_require_grads()
@@ -267,6 +278,7 @@ trainer = Trainer(
     train_dataset=train_dataset,
     data_collator=DataCollatorForSeq2Seq(tokenizer=tokenizer, padding=True),
     callbacks=[swanlab_callback],
+
 )
 
 trainer.train()
