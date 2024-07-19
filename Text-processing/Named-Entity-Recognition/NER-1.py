@@ -33,7 +33,7 @@ tokenizer = AutoTokenizer.from_pretrained("../../GLM-4-9B-Chat", use_fast=False,
 model = AutoModelForCausalLM.from_pretrained("../../GLM-4-9B-Chat", device_map="auto", torch_dtype=torch.bfloat16, trust_remote_code=True)
 
 # Load the fine-tuned Lora model
-model = PeftModel.from_pretrained(model, model_id="../../finetune/output/GLM4-NER-2/checkpoint-200")
+model = PeftModel.from_pretrained(model, model_id="../../finetune/output/NER/checkpoint-1100")
 
 # 确定使用的设备
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -56,18 +56,4 @@ messages = [
 # Generate response
 response = predict(messages, model, tokenizer, device)
 
-# 使用 ast.literal_eval 将字符串转换为列表
-data_list = ast.literal_eval(response)
-unique_data = remove_duplicates(data_list)
-print(unique_data)
-
-import pandas as pd
-# Convert the output to a table
-def convert_to_table(response):
-    df = pd.DataFrame([response])
-    return df
-
-# Use the function to convert response to table
-df = convert_to_table(unique_data)
-if df is not None:
-    print(df)
+print(response)

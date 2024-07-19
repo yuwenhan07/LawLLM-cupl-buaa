@@ -182,8 +182,8 @@ local_model_path = "../GLM-4-9B-Chat"
 # 加载本地模型权重并指定设备
 device=torch.device("cuda:{}".format(0))
 tokenizer = AutoTokenizer.from_pretrained(local_model_path, use_fast=False, trust_remote_code=True)
-model = AutoModelForCausalLM.from_pretrained(local_model_path, device_map={"": device}, torch_dtype=torch.bfloat16, trust_remote_code=True)
-model.to(device)
+model = AutoModelForCausalLM.from_pretrained(local_model_path,   device_map="auto",torch_dtype=torch.bfloat16, trust_remote_code=True)
+
 
 # Transformers加载本地模型权重
 # tokenizer = AutoTokenizer.from_pretrained(local_model_path, use_fast=False, trust_remote_code=True)
@@ -240,18 +240,20 @@ config = LoraConfig(
 
 model = get_peft_model(model, config)
 
+
+
 args = TrainingArguments(
     # 指定模型训练输出的目录。训练过程中生成的检查点和其他输出文件将保存到这个目录。
-    output_dir="./output/GLM4-NER-3",
-    per_device_train_batch_size=8,
+    output_dir="./output/NER",
+    per_device_train_batch_size=1,
     # 梯度累积步骤数。模型在实际更新参数之前会累积 4 个批次的梯度，相当于有效批量大小为 8 * 4 = 32。这在显存有限的情况下尤为有用。
     gradient_accumulation_steps=4,
     # 日志记录
     logging_steps=10,
     # 训练轮次
-    num_train_epochs=3,
+    num_train_epochs=2,
     # 保存检查点数量
-    save_steps=50,
+    save_steps=100,
     # 学习率。控制模型参数更新的步伐。设置为 0.0001，表示每次参数更新的步伐较小，这有助于模型稳定训练。
     learning_rate=1e-4,
     # 是否在每个节点上保存检查点。在分布式训练中，这一参数确保在每个节点上都保存检查点。

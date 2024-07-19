@@ -2,8 +2,7 @@ import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from peft import PeftModel
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "8"
-
+os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 
 def predict(messages, model, tokenizer):
     device = "cuda"
@@ -23,11 +22,11 @@ tokenizer = AutoTokenizer.from_pretrained("../../GLM-4-9B-Chat", use_fast=False,
 model = AutoModelForCausalLM.from_pretrained("../../GLM-4-9B-Chat", device_map="auto", torch_dtype=torch.bfloat16,trust_remote_code=True)
 
 # 加载训练好的Lora模型，将下面的checkpointXXX替换为实际的checkpoint文件名名称
-model = PeftModel.from_pretrained(model, model_id="../../finetune/output/GLM4-NER-2/checkpoint-200")
+model = PeftModel.from_pretrained(model, model_id="../../finetune/output/NER/checkpoint-1100")
 
 test_texts = {
     'instruction': "你是一个法律命名实体识别的专家。请根据给定文本，从以下十个方面（犯罪嫌疑人、受害人、被盗货币、物品价值、盗窃获利、被盗物品、作案工具、时间、地点、组织机构）提取文中的实体，没有用None表示，并按照以下格式返回结果：[犯罪嫌疑人: xxx; 受害人： xxx; 被盗货币： None; ……]",
-    'input': """被告人朱某某于2018年4月27日凌晨，在本市钟楼区**镇**村委**村**号**楼**房间，乘人不备，入户窃得被害人周某某的VIVO牌X9SPLUS手机1部,价值10000元"""
+    'input': """被害人王某报案总价值1500余元"""
 }
 
 instruction = test_texts['instruction']
