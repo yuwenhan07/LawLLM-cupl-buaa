@@ -36,20 +36,7 @@ def format_response(parsed_response):
         formatted_response.append(f"{entity}: {entity_values[0] if entity_values else 'None'}")
     return "; ".join(formatted_response)
 
-def main(load_checkpoint):
-    # 加载原下载路径的tokenizer和model
-    tokenizer = AutoTokenizer.from_pretrained("../../GLM-4-9B-Chat", use_fast=False, trust_remote_code=True)
-    model = AutoModelForCausalLM.from_pretrained("../../GLM-4-9B-Chat", device_map="auto", torch_dtype=torch.bfloat16, trust_remote_code=True)
-
-    if load_checkpoint:
-        # 加载训练好的Lora模型，将下面的checkpointXXX替换为实际的checkpoint文件名名称
-        model = PeftModel.from_pretrained(model, model_id="../../finetune/output/NER/checkpoint-1100")
-
-    # 从指定路径加载测试数据
-    data_path = "/home/yuwenhan/law-LLM/buaa&zgzf/Text-processing/Named-Entity-Recognition/data/data.json"
-    with open(data_path, 'r', encoding='utf-8') as f:
-        test_data = json.load(f)
-
+def evaluate_model(model, tokenizer, test_data, result_file):
     results = []
 
     for test_instance in test_data:
@@ -81,18 +68,33 @@ def main(load_checkpoint):
         })
 
     # 将结果保存为JSON文件
-    with open("./data/results_origin.json", "w", encoding="utf-8") as f:
+    with open(result_file, "w", encoding="utf-8") as f:
         json.dump(results, f, ensure_ascii=False, indent=4)
 
     # 计算正确率
     correct_predictions = sum(1 for result in results if result["predicted"] == result["expected"])
     total_predictions = len(results)
     accuracy = correct_predictions / total_predictions
-    print(f"Accuracy: {accuracy * 100:.2f}%")
+    print(f"Accuracy for {result_file}: {accuracy * 100:.2f}%")
+
+def main():
+    # 加载原下载路径的tokenizer和model
+    tokenizer = AutoTokenizer.from_pretrained("../../GLM-4-9B-Chat", use_fast=False, trust_remote_code=True)
+    model = AutoModelForCausalLM.from_pretrained("../../GLM-4-9B-Chat", device_map="auto", torch_dtype=torch.bfloat16, trust_remote_code=True)
+
+    # 加载训练好的Lora模型，将下面的checkpointXXX替换为实际的checkpoint文件名名称
+    checkpoint_model = PeftModel.from_pretrained(model, model_id="../../finetune/output/NER/checkpoint-1100")
+
+    # 从指定路径加载测试数据
+    data_path = "./data/data.json"
+    with open(data_path, 'r', encoding='utf-8') as f:
+        test_data = json.load(f)
+
+    # 测试不加载checkpoint的模型
+    evaluate_model(model, tokenizer, test_data, "results_without_checkpoint.json")
+
+    # 测试加载checkpoint的模型
+    evaluate_model(checkpoint_model, tokenizer, test_data, "results_with_checkpoint.json")
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--load_checkpoint", action="store_true", help="Whether to load a trained LoRA checkpoint")
-    args = parser.parse_args()
-
-    main(args.load_checkpoint)
+    main()
