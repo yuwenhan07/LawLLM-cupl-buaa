@@ -45,3 +45,8 @@ def data_process():
 
 if __name__ == '__main__':
     data_process()
+
+# 输出处理后的几条数据
+with open(processed_file, "r", encoding='utf-8') as f:
+    for _ in range(3):
+        print(f.readline().strip())
