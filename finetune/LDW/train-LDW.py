@@ -136,39 +136,27 @@ def predict(messages, model, tokenizer):
      
     return response
 
-
-
 def split_jsonl_file(input_path, train_output_path, test_output_path, num_test_samples=10):
-    """
-    将输入的 JSONL 文件拆分为训练集和测试集，前面的数据作为训练集，最后 num_test_samples 条作为测试集。
-    
-    参数:
-    - input_path (str): 输入 JSONL 文件路径
-    - train_output_path (str): 输出训练集 JSONL 文件路径
-    - test_output_path (str): 输出测试集 JSONL 文件路径
-    - num_test_samples (int): 测试集的样本数量，默认值为 10
-    """
-    # 读取整个数据集
     with open(input_path, "r", encoding="utf-8") as file:
         lines = file.readlines()
-    
-    # 拆分数据集：前面的数据作为训练集，最后 num_test_samples 条作为测试集
+
+    print(f"原始数据集共有 {len(lines)} 条数据")  # 添加这一行
+
     train_lines = lines[:-num_test_samples]
     test_lines = lines[-num_test_samples:]
 
-    # 保存训练集
     with open(train_output_path, "w", encoding="utf-8") as train_file:
         for line in train_lines:
             train_file.write(line)
-    
-    # 保存测试集
+
     with open(test_output_path, "w", encoding="utf-8") as test_file:
         for line in test_lines:
             test_file.write(line)
-    
+
     print(f"训练集已保存到 {train_output_path}")
     print(f"测试集已保存到 {test_output_path}")
-
+    print(f"训练集共有 {len(train_lines)} 条数据")  # 添加这一行
+    print(f"测试集共有 {len(test_lines)} 条数据")  # 添加这一行
 
 
 
@@ -198,7 +186,7 @@ train_dataset_path = "../data/legal-jrg-files/LDW_train_origin.jsonl"
 test_dataset_path = "../data/legal-jrg-files/LDW_test_origin.jsonl"
 split_jsonl_file(input_path, train_dataset_path, test_dataset_path)
 
-train_jsonl_new_path = "../data/lalegal-jrg-files/LDW_train.jsonl"
+train_jsonl_new_path = "../data/legal-jrg-files/LDW_train.jsonl"
 test_jsonl_new_path = "../data/legal-jrg-files/LDW_test.jsonl"
 
 if not os.path.exists(train_jsonl_new_path):
