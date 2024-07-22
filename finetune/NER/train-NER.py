@@ -1,24 +1,3 @@
-import os
-import logging
-import warnings
-
-# 指定使用的 CUDA 设备
-os.environ["CUDA_VISIBLE_DEVICES"] = "9"
-
-# 抑制TensorFlow的日志
-os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
-
-# 设置Transformers的日志等级为ERROR
-logging.getLogger("transformers").setLevel(logging.ERROR)
-
-# 抑制警告
-warnings.filterwarnings("ignore")
-
-# 设置PyTorch的日志等级为ERROR
-logging.getLogger("torch").setLevel(logging.ERROR)
-
-
-
 import json
 import pandas as pd
 import torch
@@ -27,11 +6,13 @@ from modelscope import snapshot_download, AutoTokenizer
 from swanlab.integration.huggingface import SwanLabCallback
 from peft import LoraConfig, TaskType, get_peft_model
 from transformers import AutoModelForCausalLM, TrainingArguments, Trainer, DataCollatorForSeq2Seq
+import os
 import swanlab
 import sys
+import os
 
-
-
+# 指定使用的 CUDA 设备
+os.environ["CUDA_VISIBLE_DEVICES"] = "9"
 
 
 # 文本预处理
@@ -107,7 +88,7 @@ def process_func(example):
 # 生成结果函数
 def predict(messages, model, tokenizer):
     if torch.cuda.is_available():
-        device=torch.device("cuda:{}".format(0))
+        device = torch.device("cuda" )
     else:
         print("CUDA is unavailable")
         sys.exit(1)
@@ -137,69 +118,27 @@ def predict(messages, model, tokenizer):
     return response
 
 
-
-def split_jsonl_file(input_path, train_output_path, test_output_path, num_test_samples=10):
-    """
-    将输入的 JSONL 文件拆分为训练集和测试集，前面的数据作为训练集，最后 num_test_samples 条作为测试集。
-    
-    参数:
-    - input_path (str): 输入 JSONL 文件路径
-    - train_output_path (str): 输出训练集 JSONL 文件路径
-    - test_output_path (str): 输出测试集 JSONL 文件路径
-    - num_test_samples (int): 测试集的样本数量，默认值为 10
-    """
-    # 读取整个数据集
-    with open(input_path, "r", encoding="utf-8") as file:
-        lines = file.readlines()
-    
-    # 拆分数据集：前面的数据作为训练集，最后 num_test_samples 条作为测试集
-    train_lines = lines[:-num_test_samples]
-    test_lines = lines[-num_test_samples:]
-
-    # 保存训练集
-    with open(train_output_path, "w", encoding="utf-8") as train_file:
-        for line in train_lines:
-            train_file.write(line)
-    
-    # 保存测试集
-    with open(test_output_path, "w", encoding="utf-8") as test_file:
-        for line in test_lines:
-            test_file.write(line)
-    
-    print(f"训练集已保存到 {train_output_path}")
-    print(f"测试集已保存到 {test_output_path}")
-
-
-
-
 '''
 •	model.enable_input_require_grads()：这是一个启用模型输入梯度的方法。在某些情况下，如使用梯度检查点（Gradient Checkpointing）时，需要启用输入梯度计算。
 •	梯度检查点是一种节省显存的方法，尤其在处理大模型时。它通过在前向传播时存储一部分中间结果，减少显存使用，但在反向传播时需要重新计算这些中间结果。
 '''
 # 本地模型路径
-local_model_path = "../GLM-4-9B-Chat"
-
-# 加载本地模型权重并指定设备
-device=torch.device("cuda:{}".format(0))
-tokenizer = AutoTokenizer.from_pretrained(local_model_path, use_fast=False, trust_remote_code=True)
-model = AutoModelForCausalLM.from_pretrained(local_model_path,   device_map="auto",torch_dtype=torch.bfloat16, trust_remote_code=True)
-
+local_model_path = "../../GLM-4-9B-Chat"
 
 # Transformers加载本地模型权重
-# tokenizer = AutoTokenizer.from_pretrained(local_model_path, use_fast=False, trust_remote_code=True)
-# model = AutoModelForCausalLM.from_pretrained(local_model_path, device_map="auto", torch_dtype=torch.bfloat16, trust_remote_code=True)
+tokenizer = AutoTokenizer.from_pretrained(local_model_path, use_fast=False, trust_remote_code=True)
+model = AutoModelForCausalLM.from_pretrained(local_model_path, device_map="auto", torch_dtype=torch.bfloat16, trust_remote_code=True)
 
 # 开启梯度检查点时，要执行该方法
 model.enable_input_require_grads()
 
-# 加载数据集
-input_path = "./data/law/NER.jsonl"
-train_dataset_path = "./data/law/NER_train_origin.jsonl"
-test_dataset_path = "./data/law/NER_test_origin.jsonl"
-split_jsonl_file(input_path, train_dataset_path, test_dataset_path)
 
-train_jsonl_new_path = "./data/law/NER_train.jsonl"
-test_jsonl_new_path = "./data/law/NER_test.jsonl"
+# 加载、处理数据集和测试集
+train_dataset_path = "../data/law/NER.jsonl"
+test_dataset_path = "../data/law/NER.jsonl"
+
+train_jsonl_new_path = "../data/law/NER_train.jsonl"
+test_jsonl_new_path = "../data/law/NER_test.jsonl"
 
 if not os.path.exists(train_jsonl_new_path):
     dataset_jsonl_transfer(train_dataset_path, train_jsonl_new_path)
@@ -240,20 +179,18 @@ config = LoraConfig(
 
 model = get_peft_model(model, config)
 
-
-
 args = TrainingArguments(
     # 指定模型训练输出的目录。训练过程中生成的检查点和其他输出文件将保存到这个目录。
-    output_dir="./output/NER",
-    per_device_train_batch_size=1,
+    output_dir="../output/GLM4-NER-3",
+    per_device_train_batch_size=8,
     # 梯度累积步骤数。模型在实际更新参数之前会累积 4 个批次的梯度，相当于有效批量大小为 8 * 4 = 32。这在显存有限的情况下尤为有用。
     gradient_accumulation_steps=4,
     # 日志记录
     logging_steps=10,
     # 训练轮次
-    num_train_epochs=2,
+    num_train_epochs=3,
     # 保存检查点数量
-    save_steps=100,
+    save_steps=50,
     # 学习率。控制模型参数更新的步伐。设置为 0.0001，表示每次参数更新的步伐较小，这有助于模型稳定训练。
     learning_rate=1e-4,
     # 是否在每个节点上保存检查点。在分布式训练中，这一参数确保在每个节点上都保存检查点。
@@ -280,7 +217,6 @@ trainer = Trainer(
     train_dataset=train_dataset,
     data_collator=DataCollatorForSeq2Seq(tokenizer=tokenizer, padding=True),
     callbacks=[swanlab_callback],
-
 )
 
 trainer.train()

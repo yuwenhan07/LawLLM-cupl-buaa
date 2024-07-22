@@ -28,13 +28,13 @@ def dataset_jsonl_transfer(origin_path, new_path):
         for line in file:
             # 解析每一行的json数据  具体处理方式根据内容所决定
             data = json.loads(line)
-            context = data["context"]
-            NER = data["entities"]
+            context = data["text"]
+            LDW = data["answer"]
             # 此处设定instruction作为指令微调的指令
             message = {
-                    "instruction": """你是一个法律命名实体识别的专家。请根据给定文本，从以下十个方面（犯罪嫌疑人、受害人、被盗货币、物品价值、盗窃获利、被盗物品、作案工具、时间、地点、组织机构）提取文中的实体，没有用None表示，并按照以下格式返回结果：[犯罪嫌疑人: xxx; 受害人： xxx; 被盗货币： None; ……]。""",
-                    "input": f"法律文本: \"{context}\"",
-                    "output": NER
+                    "instruction": """请你根据下面中括号里的'诉讼请求'和'审理查明'内容生成对应的'本院认为'内容。""",
+                    "input": f"\n\"{context}\"",
+                    "output": LDW
             }
             messages.append(message)
 
@@ -55,7 +55,7 @@ def process_func(example):
     
     # 构建指令和输入文本的序列
     instruction_text = (
-        f"<|system|>\n你是一个法律命名实体识别的专家。请根据给定文本，从以下十个方面（犯罪嫌疑人、受害人、被盗货币、物品价值、盗窃获利、被盗物品、作案工具、时间、地点、组织机构）提取文中的实体，没有用None表示，并按照以下格式返回结果：[犯罪嫌疑人: xxx; 受害人： xxx; 被盗货币： None; ……]<|endoftext|>\n<|user|>\n{example['input']}<|endoftext|>\n<|assistant|>\n"
+        f"<|system|>\n请你根据下面中括号里的'诉讼请求'和'审理查明'内容生成对应的'本院认为'内容。<|endoftext|>\n<|user|>\n{example['input']}<|endoftext|>\n<|assistant|>\n"
     )
     
     # 对instruction进行tokenizer  不添加特殊的分词符
@@ -117,13 +117,52 @@ def predict(messages, model, tokenizer):
      
     return response
 
+def split_jsonl_file(input_path, train_output_path, test_output_path, num_test_samples=10):
+    """
+    将输入的 JSONL 文件拆分为训练集和测试集，前面的数据作为训练集，最后 num_test_samples 条作为测试集。
+    
+    参数:
+    - input_path (str): 输入 JSONL 文件路径
+    - train_output_path (str): 输出训练集 JSONL 文件路径
+    - test_output_path (str): 输出测试集 JSONL 文件路径
+    - num_test_samples (int): 测试集的样本数量，默认值为 10
+    """
+    # 读取整个数据集
+    with open(input_path, "r", encoding="utf-8") as file:
+        lines = file.readlines()
+    
+    # 拆分数据集：前面的数据作为训练集，最后 num_test_samples 条作为测试集
+    train_lines = lines[:-num_test_samples]
+    test_lines = lines[-num_test_samples:]
+
+    # 保存训练集
+    with open(train_output_path, "w", encoding="utf-8") as train_file:
+        for line in train_lines:
+            train_file.write(line)
+    
+    # 保存测试集
+    with open(test_output_path, "w", encoding="utf-8") as test_file:
+        for line in test_lines:
+            test_file.write(line)
+    
+    print(f"训练集已保存到 {train_output_path}")
+    print(f"测试集已保存到 {test_output_path}")
+
+def ensure_dir_exists(file_path):
+    """
+    确保目录存在，如果不存在则创建目录
+    """
+    dir_path = os.path.dirname(file_path)
+    if not os.path.exists(dir_path):
+        os.makedirs(dir_path)
+
 
 '''
 •	model.enable_input_require_grads()：这是一个启用模型输入梯度的方法。在某些情况下，如使用梯度检查点（Gradient Checkpointing）时，需要启用输入梯度计算。
 •	梯度检查点是一种节省显存的方法，尤其在处理大模型时。它通过在前向传播时存储一部分中间结果，减少显存使用，但在反向传播时需要重新计算这些中间结果。
 '''
 # 本地模型路径
-local_model_path = "../GLM-4-9B-Chat"
+local_model_path = "../../GLM-4-9B-Chat"
 
 # Transformers加载本地模型权重
 tokenizer = AutoTokenizer.from_pretrained(local_model_path, use_fast=False, trust_remote_code=True)
@@ -132,13 +171,19 @@ model = AutoModelForCausalLM.from_pretrained(local_model_path, device_map="auto"
 # 开启梯度检查点时，要执行该方法
 model.enable_input_require_grads()
 
+# 加载数据集
+input_path = "../data/legal-jrg-files/test.jsonl"
+train_dataset_path = "../data/legal-jrg-files/LDW_train_origin.jsonl"
+test_dataset_path = "../data/legal-jrg-files/LDW_test_origin.jsonl"
+split_jsonl_file(input_path, train_dataset_path, test_dataset_path)
 
-# 加载、处理数据集和测试集
-train_dataset_path = "./data/law/NER.jsonl"
-test_dataset_path = "./data/law/NER.jsonl"
+train_jsonl_new_path = "../data/lalegal-jrg-files/LDW_train.jsonl"
+test_jsonl_new_path = "../data/legal-jrg-files/LDW_test.jsonl"
 
-train_jsonl_new_path = "./data/law/NER_train.jsonl"
-test_jsonl_new_path = "./data/law/NER_test.jsonl"
+# 确保路径存在
+ensure_dir_exists(train_jsonl_new_path)
+ensure_dir_exists(test_jsonl_new_path)
+
 
 if not os.path.exists(train_jsonl_new_path):
     dataset_jsonl_transfer(train_dataset_path, train_jsonl_new_path)
@@ -150,6 +195,7 @@ if os.path.getsize(train_jsonl_new_path) == 0:
     raise ValueError(f"Training dataset {train_jsonl_new_path} is empty.")
 if os.path.getsize(test_jsonl_new_path) == 0:
     raise ValueError(f"Testing dataset {test_jsonl_new_path} is empty.")
+    
 
 # 得到训练集
 train_df = pd.read_json(train_jsonl_new_path, lines=True)
@@ -181,7 +227,7 @@ model = get_peft_model(model, config)
 
 args = TrainingArguments(
     # 指定模型训练输出的目录。训练过程中生成的检查点和其他输出文件将保存到这个目录。
-    output_dir="./output/GLM4-NER-3",
+    output_dir="../output/LDW",
     per_device_train_batch_size=8,
     # 梯度累积步骤数。模型在实际更新参数之前会累积 4 个批次的梯度，相当于有效批量大小为 8 * 4 = 32。这在显存有限的情况下尤为有用。
     gradient_accumulation_steps=4,
@@ -202,12 +248,12 @@ args = TrainingArguments(
 )
 
 swanlab_callback = SwanLabCallback(
-    project="GLM4-NER-fintune",
+    project="GLM4-LDE-fintune",
     experiment_name="GLM4-9B-Chat",
-    description="使用智谱GLM4-9B-Chat模型在法律命名实体识别数据集上微调。",
+    description="使用智谱GLM4-9B-Chat模型在法律文本续写上进行微调。",
     config={
         "model": "GLM4-9B-Chat",
-        "dataset": "法律命名实体识别",
+        "dataset": "法律文本续写",
     },
 )
 
