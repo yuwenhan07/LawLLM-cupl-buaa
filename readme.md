@@ -7,7 +7,8 @@
 ![律师](Text-processing/Lawer/img/image.png)
 ## 智能司法决策框架
 通过RAG和COT技术，实现对一个刑事案件的智能司法判决。
-![logo](insight/logoo_transparent.png)
+### insight web demo
+![insight-demo](image.png)
 
 ## 注
 本项目仍在开发阶段，github作为一个云端存储容器，之后的开发会不断改进～
