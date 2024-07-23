@@ -1,5 +1,4 @@
 import os
-# 指定使用的 CUDA 设备
 os.environ["CUDA_VISIBLE_DEVICES"] = "6,7,8,9"
 
 import faiss
@@ -22,10 +21,12 @@ gen_model = AutoModelForCausalLM.from_pretrained(gen_model_path, torch_dtype=tor
 
 # 设置设备为cuda
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-print(device)
 
 model = model.to(device)
 gen_model = gen_model.to(device).eval()
+
+# 固定随机种子
+torch.manual_seed(42)
 
 # 加载FAISS索引
 index_path = "../faiss_index/embedding.index"
@@ -52,13 +53,15 @@ def search(query, top_k=5):
 
 # 函数：生成答案
 def generate_answer(context, query):
-    input_text = f"法律问题: {query}\n可能会用到的参考文献:{context}\n回答（请注意参考文献可能会有错）:"
+    input_text = f"法律问题:{query}\n回答可能会用到的参考文献:{context}\n"
     inputs = gen_tokenizer(input_text, return_tensors="pt", truncation=True, max_length=gen_tokenizer.model_max_length).to(device)
-    gen_kwargs = {"max_length": 1024, "do_sample": True, "top_k": 1}
+    gen_kwargs = {"max_length": 1024, "do_sample": True}  # 禁用采样
 
     with torch.no_grad():
         outputs = gen_model.generate(**inputs, **gen_kwargs)
         answer = gen_tokenizer.decode(outputs[0], skip_special_tokens=True)
+    # 去除input_text相关内容
+    answer = answer.replace(input_text, "").strip()
     return answer
 
 # 函数：计算余弦相似度
@@ -66,7 +69,7 @@ def cosine_similarity_embeddings(embeddings):
     return cosine_similarity(embeddings)
 
 # RAG函数：检索并生成答案
-def rag(query, top_k=5, similarity_threshold=0.8, max_results=3):
+def rag(query, top_k=5, similarity_threshold=0.9, max_results=3):
     search_results, query_embedding = search(query, top_k)
     
     # 去重
@@ -78,7 +81,7 @@ def rag(query, top_k=5, similarity_threshold=0.8, max_results=3):
         if len(unique_entries) >= max_results:
             break
 
-        # 对条目进行编码
+        # 对条目进行编码m
         entry_tokens = tokenizer(entry, return_tensors="pt", truncation=True, max_length=tokenizer.model_max_length)["input_ids"].to(device)
         with torch.no_grad():
             entry_embedding = model(entry_tokens).last_hidden_state.mean(dim=1).cpu().numpy().reshape(1, -1)
@@ -109,7 +112,8 @@ def rag(query, top_k=5, similarity_threshold=0.8, max_results=3):
 query = input("请输入您的法律问题：")
 answer, results = rag(query, top_k=10, max_results=3)  # top_k 设为10以获取更多候选结果用于去重
 
-print(f"回答: {answer}")
-print("检索结果:")
+
+print(f"基于参考文献的回答:{answer}")
+print("参考文献:")
 for (filename, entry, distance) in results:
-    print(f"文件: {filename}, 条目: {entry.strip()}, 距离: {distance}")
+    print(f"文件: {filename}, 条目: {entry.strip()}")
