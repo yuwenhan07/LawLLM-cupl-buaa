@@ -39,23 +39,11 @@ with open("../faiss_index/entries.txt", "r", encoding="utf-8") as f:
         file_path, entry = line.strip().split('\t')
         entries.append((file_path, entry))
 
-# 函数：进行检索
-def search(query, top_k=5):
-    # 对查询进行编码
-    query_tokens = tokenizer(query, return_tensors="pt", truncation=True, max_length=tokenizer.model_max_length)["input_ids"].to(device)
-    with torch.no_grad():
-        query_embedding = model(query_tokens).last_hidden_state.mean(dim=1).cpu().numpy()
-
-    # 检索最相似的top_k个结果
-    distances, indices = index.search(query_embedding, top_k)
-    results = [(entries[I], distances[0][j]) for j, I in enumerate(indices[0])]
-    return results, query_embedding
-
 # 函数：生成答案
 def generate_answer(context, query):
     input_text = f"法律问题:{query}\n回答可能会用到的参考文献:{context}\n"
     inputs = gen_tokenizer(input_text, return_tensors="pt", truncation=True, max_length=gen_tokenizer.model_max_length).to(device)
-    gen_kwargs = {"max_length": 1024, "do_sample": True}  # 禁用采样
+    gen_kwargs = {"max_length": 1024, "do_sample": True}
 
     with torch.no_grad():
         outputs = gen_model.generate(**inputs, **gen_kwargs)
@@ -63,10 +51,6 @@ def generate_answer(context, query):
     # 去除input_text相关内容
     answer = answer.replace(input_text, "").strip()
     return answer
-
-# 函数：计算余弦相似度
-def cosine_similarity_embeddings(embeddings):
-    return cosine_similarity(embeddings)
 
 # 函数：进行检索
 def search(query, top_k=5):
@@ -78,12 +62,26 @@ def search(query, top_k=5):
     # 检索最相似的top_k个结果
     distances, indices = index.search(query_embedding, top_k)
     results = [(entries[I][0], entries[I][1], distances[0][j]) for j, I in enumerate(indices[0])]
-    response = generate_answer(query, results)
-    return response, results
+    
+    # 去重和过滤包含关系的条目
+    filtered_results = []
+    seen_entries = set()
+    
+    for filename, entry, distance in results:
+        if any(entry in e for e in seen_entries):
+            continue
+        filtered_results.append((filename, entry, distance))
+        seen_entries.add(entry)
+        
+    # 将过滤后的结果格式化为参考文献文本
+    context = "\n".join([f"{entry}" for _, entry, _ in filtered_results])
+    response = generate_answer(context, query)
+    
+    return response, filtered_results
 
 # 示例查询
 query = input("请输入您的法律问题：")
-answer, results = search(query, top_k=3)  # top_k 设为10以获取更多候选结果用于去重
+answer, results = search(query, top_k=3)  
 
 print(f"基于参考文献的回答: {answer}")
 print("参考文献:")

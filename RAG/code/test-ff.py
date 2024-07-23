@@ -38,11 +38,22 @@ def search(query, top_k=5):
 
     # 检索最相似的top_k个结果
     distances, indices = index.search(query_embedding, top_k)
-    results = [(entries[i], distances[0][j]) for j, i in enumerate(indices[0])]
-    return results
+    results = [(entries[I], distances[0][j]) for j, I in enumerate(indices[0])]
+
+    # 去重和过滤包含关系的条目
+    filtered_results = []
+    seen_entries = set()
+    
+    for (filename, entry), distance in results:
+        if any(entry in e for e in seen_entries):
+            continue
+        filtered_results.append(((filename, entry), distance))
+        seen_entries.add(entry)
+        
+    return filtered_results
 
 # 示例查询
-query = "我国立法法规定的立法原则为"
+query = "如果我在驾驶过程中不小心撞人了，我应该怎么办？"
 results = search(query)
 
 for (filename, entry), distance in results:
