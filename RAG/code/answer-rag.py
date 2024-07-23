@@ -37,6 +37,8 @@ entries = []
 with open("../faiss_index/entries.txt", "r", encoding="utf-8") as f:
     for line in f:
         file_path, entry = line.strip().split('\t')
+        # 去掉路径中的../reference
+        file_path = file_path.replace("../reference_book/", "")
         entries.append((file_path, entry))
 
 # 函数：生成答案
@@ -61,29 +63,29 @@ def search(query, top_k=5):
 
     # 检索最相似的top_k个结果
     distances, indices = index.search(query_embedding, top_k)
-    results = [(entries[I][0], entries[I][1], distances[0][j]) for j, I in enumerate(indices[0])]
+    results = [(entries[I][0], entries[I][1]) for j, I in enumerate(indices[0])]
     
     # 去重和过滤包含关系的条目
     filtered_results = []
     seen_entries = set()
     
-    for filename, entry, distance in results:
+    for filename, entry in results:
         if any(entry in e for e in seen_entries):
             continue
-        filtered_results.append((filename, entry, distance))
+        filtered_results.append((filename, entry))
         seen_entries.add(entry)
         
     # 将过滤后的结果格式化为参考文献文本
-    context = "\n".join([f"{entry}" for _, entry, _ in filtered_results])
+    context = "\n".join([f"{entry}" for _, entry in filtered_results])
     response = generate_answer(context, query)
     
     return response, filtered_results
 
 # 示例查询
 query = input("请输入您的法律问题：")
-answer, results = search(query, top_k=3)  
+answer, results = search(query, top_k=3)  # top_k 设为10以获取更多候选结果用于去重
 
 print(f"基于参考文献的回答: {answer}")
 print("参考文献:")
-for (filename, entry, distance) in results:
-    print(f"文件: {filename}, 条目: {entry.strip()}, 距离: {distance}")
+for filename, entry in results:
+    print(f"参考书籍: {filename}, 条目: {entry.strip()}")

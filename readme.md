@@ -16,5 +16,8 @@
 ### insight web demo
 ![insight-demo](insight/img/image.png)
 
+## 基于RAG的法律问答
+![rag](RAG/img/rag.png)
+
 ## 注
 本项目仍在开发阶段，github作为一个云端存储容器，之后的开发会不断改进～
