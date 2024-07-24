@@ -42,7 +42,7 @@ model = model.to(device)
 instruction = ("假设你是一名律师，请回答下面这个真实情景下的中文法律咨询问题。")
 
 # Get user input
-input_value = input("请jjiojoiasdjfi oiasjiopji输入您的问题: ")
+input_value = input("请输入您的问题: ")
 
 # Prepare messages for the model
 messages = [
