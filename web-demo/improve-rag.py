@@ -17,9 +17,6 @@ gen_model_path = "../GLM-4-9B-Chat"
 assert torch.cuda.device_count() > 1, "至少需要两个CUDA设备"
 assert torch.cuda.is_available(), "CUDA设备不可用"
 
-# 打印可用的CUDA设备信息
-for i in range(torch.cuda.device_count()):
-    print(f"CUDA设备 {i}: {torch.cuda.get_device_name(i)}")
 
 # 设置设备
 device_query = torch.device("cuda:1")  # 使用第二个可用的设备
@@ -40,9 +37,6 @@ model = torch.nn.DataParallel(model, device_ids=[1])
 gen_model = gen_model.to(device_gen)
 gen_model = torch.nn.DataParallel(gen_model, device_ids=[0]).eval()
 
-# 固定随机种子
-torch.manual_seed(42)
-
 # 加载FAISS索引
 index_path = "../RAG/faiss_index/embedding.index"
 index = faiss.read_index(index_path)
@@ -60,9 +54,18 @@ with open("../RAG/faiss_index/entries.txt", "r", encoding="utf-8") as f:
 
 # 函数：生成答案
 def generate_answer(context, query):
-    input_text = f"法律问题:{query}\n回答可能会用到的参考文献:{context}\n"
+    input_text = f"法律问题:{query}\n回答可能会用到的参考文献:{context}\n只要你觉得问题已经回答完成请及时停止"
     inputs = gen_tokenizer(input_text, return_tensors="pt", truncation=True, max_length=gen_tokenizer.model_max_length).to(device_gen)
-    gen_kwargs = {"max_length": 1024, "do_sample": True}  
+    gen_kwargs = {
+        "max_length": 1024,  # 增加生成文本的最大长度
+        "min_length": 100,   # 设置生成文本的最小长度
+        "num_return_sequences": 1,
+        "do_sample": True,
+        "temperature": 0.7,  # 调整温度
+        "top_p": 0.9,        # 调整top_p以增加生成的多样性
+        "top_k": 50          # 调整top_k以增加生成的多样性
+    }
+
 
     with torch.no_grad():
         outputs = gen_model.module.generate(**inputs, **gen_kwargs)
@@ -72,9 +75,9 @@ def generate_answer(context, query):
     return answer
 
 # 函数：进行检索
-def search(query, top_k=5):
+def search(query, top_k):
     # 对查询进行编码
-    query_tokens = tokenizer(query, return_tensors="pt", truncation=True, max_length=tokenizer.model_max_length)["input_ids"].to(device)
+    query_tokens = tokenizer(query, return_tensors="pt", truncation=True, max_length=tokenizer.model_max_length)["input_ids"].to(device_query)
     with torch.no_grad():
         query_embedding = model(query_tokens).last_hidden_state.mean(dim=1).cpu().numpy()
 
@@ -106,10 +109,10 @@ st.title("法律问题问答系统")
 query = st.text_input("请输入您的法律问题：")
 if query:
     with st.spinner('处理中...'):
-        answer, results = search(query, top_k=3)  
+        answer, results = search(query, top_k=1)  
     st.subheader("基于参考文献的回答:")
     st.write(answer)
     # 在侧边栏展示参考文献
     st.sidebar.subheader("参考文献:")
-    for (filename, entry, distance) in results:
+    for (filename, entry) in results:
         st.sidebar.write(f"文件: {filename} \n 条目: {entry.strip()}")
