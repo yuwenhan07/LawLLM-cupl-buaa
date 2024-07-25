@@ -17,10 +17,6 @@ gen_model_path = "../GLM-4-9B-Chat"
 assert torch.cuda.device_count() > 1, "至少需要两个CUDA设备"
 assert torch.cuda.is_available(), "CUDA设备不可用"
 
-# 打印可用的CUDA设备信息
-for i in range(torch.cuda.device_count()):
-    print(f"CUDA设备 {i}: {torch.cuda.get_device_name(i)}")
-
 # 设置设备
 device_query = torch.device("cuda:1")  # 使用第二个可用的设备
 device_gen = torch.device("cuda:0")    # 使用第一个可用的设备
@@ -52,6 +48,8 @@ entries = []
 with open("../RAG/faiss_index/entries.txt", "r", encoding="utf-8") as f:
     for line in f:
         file_path, entry = line.strip().split('\t')
+        # 去掉路径中的../reference
+        file_path = file_path.replace("../reference_book/", "")
         entries.append((file_path, entry))
 
 # 函数：进行检索
@@ -133,5 +131,5 @@ if query:
 
     # 在侧边栏展示参考文献
     st.sidebar.subheader("参考文献:")
-    for (filename, entry) in results:
-        st.sidebar.write(f"文件: {filename} \n 条目: {entry.strip()}")
+    for (filename, entry, distance) in results:
+        st.sidebar.write(f"文件: {filename}\n条目: {entry.strip()}\n距离: {distance:.4f}")
