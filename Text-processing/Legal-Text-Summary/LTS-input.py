@@ -32,7 +32,7 @@ tokenizer = AutoTokenizer.from_pretrained("../../GLM-4-9B-Chat", use_fast=False,
 model = AutoModelForCausalLM.from_pretrained("../../GLM-4-9B-Chat", device_map="auto", torch_dtype=torch.bfloat16, trust_remote_code=True)
 
 # Load the fine-tuned Lora model
-model = PeftModel.from_pretrained(model, model_id="../../finetune/output//LTS/checkpoint-100")
+model = PeftModel.from_pretrained(model, model_id="../../finetune/output/LTS/checkpoint-100")
 
 # 确定使用的设备
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')

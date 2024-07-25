@@ -50,6 +50,50 @@ def data_process(text):
 st.set_page_config(page_title="Law-llm", page_icon=":robot_face:", layout="wide")
 st.title("Lawllm :robot_face:")
 
+# 添加自定义CSS样式
+st.markdown("""
+    <style>
+        /* 设置主要内容区的背景颜色、内边距和边框圆角 */
+        .main {
+            background-color: #FFFFFF;  /* 设置背景颜色为淡灰蓝色 */
+            padding: 20px;  /* 内边距为20像素 */
+            border-radius: 10px;  /* 边框圆角半径为10像素 */
+        }
+        
+        /* 设置侧边栏内容区的背景颜色和边框圆角 */
+        .sidebar .sidebar-content {
+            background-color: #dfe6f0;  /* 设置背景颜色为更浅的灰蓝色 */
+            border-radius: 10px;  /* 边框圆角半径为10像素 */
+        }
+        
+        /* 设置页脚的样式，使其固定在页面底部 */
+        .footer {
+            position: fixed;  /* 固定定位 */
+            bottom: 0;  /* 贴近页面底部 */
+            width: 100%;  /* 宽度占满页面 */
+            color: white;  /* 文字颜色为白色 */
+            text-align: center;  /* 文字居中对齐 */
+            padding: 10px;  /* 内边距为10像素 */
+            background: #2583E5;  /* 背景颜色为蓝色 */
+        }
+        
+        /* 设置按钮的样式 */
+        .stButton>button {
+            background-color: #2583E5;  /* 按钮背景颜色为蓝色 */
+            color: white;  /* 文字颜色为白色 */
+            border-radius: 10px;  /* 边框圆角半径为10像素 */
+            padding: 10px 20px;  /* 上下内边距为10像素，左右内边距为20像素 */
+            font-size: 16px;  /* 字体大小为16像素 */
+            margin: 10px 0;  /* 上下外边距为10像素 */
+        }
+        
+        /* 设置文本区域的样式 */
+        .stTextArea textarea {
+            border-radius: 10px;  /* 边框圆角半径为10像素 */
+        }
+    </style>
+""", unsafe_allow_html=True)
+
 # 初始化会话状态
 if 'processed_cases' not in st.session_state:
     st.session_state['processed_cases'] = ''
@@ -125,19 +169,8 @@ else:
 
 # Custom footer
 footer_html = """
-    <style>
-        .footer {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            color: white;
-            text-align: center;
-            padding: 10px;
-            background: #2583E5;
-        }
-    </style>
     <div class="footer">
         <p>Developed by ZGZF&BUAA</p>
     </div>
 """
-st.write(footer_html, unsafe_allow_html=True)
+st.markdown(footer_html, unsafe_allow_html=True)
