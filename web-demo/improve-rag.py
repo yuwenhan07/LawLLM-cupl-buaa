@@ -111,7 +111,7 @@ st.title("法律问题问答系统")
 query = st.text_input("请输入您的法律问题：")
 if query:
     with st.spinner('处理中...'):
-        answer, results = search(query, top_k=3)  
+        answer, results = search(query, top_k=1)  
     st.subheader("基于参考文献的回答:")
     st.write(answer)
     # 在侧边栏展示参考文献
