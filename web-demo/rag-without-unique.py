@@ -4,7 +4,6 @@ import faiss
 import torch
 from transformers import AutoTokenizer, AutoModel, AutoModelForCausalLM
 import numpy as np
-from sklearn.metrics.pairwise import cosine_similarity
 
 # 设置环境变量
 os.environ["CUDA_VISIBLE_DEVICES"] = "6,7"
@@ -16,6 +15,10 @@ gen_model_path = "../GLM-4-9B-Chat"
 # 检查CUDA设备的可用性
 assert torch.cuda.device_count() > 1, "至少需要两个CUDA设备"
 assert torch.cuda.is_available(), "CUDA设备不可用"
+
+# 打印可用的CUDA设备信息
+for i in range(torch.cuda.device_count()):
+    print(f"CUDA设备 {i}: {torch.cuda.get_device_name(i)}")
 
 # 设置设备
 device_query = torch.device("cuda:1")  # 使用第二个可用的设备
@@ -48,14 +51,24 @@ entries = []
 with open("../RAG/faiss_index/entries.txt", "r", encoding="utf-8") as f:
     for line in f:
         file_path, entry = line.strip().split('\t')
-        # 去掉路径中的../reference
-        file_path = file_path.replace("../reference_book/", "")
         entries.append((file_path, entry))
 
+# 函数：进行检索
+def search(query, top_k=5):
+    # 对查询进行编码
+    query_tokens = tokenizer(query, return_tensors="pt", truncation=True, max_length=tokenizer.model_max_length)["input_ids"].to(device_query)
+    with torch.no_grad():
+        query_embedding = model(query_tokens).last_hidden_state.mean(dim=1).cpu().numpy()
+
+    # 检索最相似的top_k个结果
+    distances, indices = index.search(query_embedding, top_k)
+    results = [(entries[I][0], entries[I][1]) for I in indices[0]]
+    return results, query_embedding
 
 # 函数：生成答案
 def generate_answer(context, query):
     input_text = f"法律问题:{query}\n回答可能会用到的参考文献:{context}\n"
+    print(input_text)
     inputs = gen_tokenizer(input_text, return_tensors="pt", truncation=True, max_length=gen_tokenizer.model_max_length).to(device_gen)
     gen_kwargs = {"max_length": 2500, "do_sample": True, "top_k": 1}
 
@@ -66,27 +79,26 @@ def generate_answer(context, query):
     answer = answer.replace(input_text, "").strip()
     return answer
 
-# 函数：检索最相近的条目
-def retrieve_similar_entries(query, k=3):
-    inputs = tokenizer(query, return_tensors="pt", truncation=True, max_length=tokenizer.model_max_length).to(device_query)
-    with torch.no_grad():
-        query_emb = model(**inputs).last_hidden_state.mean(dim=1).cpu().numpy()
+# RAG函数：检索并生成答案
+def rag(query, top_k=5):
+    search_results, _ = search(query, top_k)
     
-    _, indices = index.search(query_emb, k)
-    return [(entries[idx][0], entries[idx][1]) for idx in indices[0]]
+    context = " ".join([entry for _, entry in search_results])
+    answer = generate_answer(context, query)
+    return answer, search_results
 
-# Streamlit界面
-st.title("法律咨询生成器")
-query = st.text_input("请输入您的法律问题:")
+# Streamlit 界面
+st.title("法律问题问答系统")
+
+query = st.text_input("请输入您的法律问题：")
 
 if query:
-    similar_entries = retrieve_similar_entries(query)
-    context = "\n".join([entry for _, entry in similar_entries])
-    
-    st.sidebar.title("参考文献")
-    for file_path, entry in similar_entries:
-        st.sidebar.write(f"文件: {file_path}\n条目: {entry}\n")
+    with st.spinner('处理中...'):
+        answer, results = rag(query, top_k=3)  # top_k 设为10以获取更多候选结果
 
-    answer = generate_answer(context, query)
-    st.write("回答:")
+    st.subheader("基于参考文献的回答:")
     st.write(answer)
+
+    st.subheader("参考文献:")
+    for (filename, entry) in results:
+        st.write(f"文件: {filename}, 条目: {entry.strip()}")

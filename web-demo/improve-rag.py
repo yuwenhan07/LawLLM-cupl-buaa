@@ -4,7 +4,6 @@ import faiss
 import torch
 from transformers import AutoTokenizer, AutoModel, AutoModelForCausalLM
 import numpy as np
-from sklearn.metrics.pairwise import cosine_similarity
 
 # 设置环境变量
 os.environ["CUDA_VISIBLE_DEVICES"] = "6,7"
@@ -12,10 +11,6 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "6,7"
 # 路径设置
 tokenizer_path = "../BAAI_bge-m3"
 gen_model_path = "../GLM-4-9B-Chat"
-
-# 检查CUDA设备的可用性
-assert torch.cuda.device_count() > 1, "至少需要两个CUDA设备"
-assert torch.cuda.is_available(), "CUDA设备不可用"
 
 
 # 设置设备
@@ -28,14 +23,15 @@ model = AutoModel.from_pretrained(tokenizer_path)
 
 # 加载生成模型和tokenizer
 gen_tokenizer = AutoTokenizer.from_pretrained(gen_model_path, trust_remote_code=True)
-gen_model = AutoModelForCausalLM.from_pretrained(gen_model_path, torch_dtype=torch.bfloat16, low_cpu_mem_usage=True, trust_remote_code=True)
+
 
 # 确保模型加载正确后再移动到设备
 model = model.to(device_query)
 model = torch.nn.DataParallel(model, device_ids=[1])
 
-gen_model = gen_model.to(device_gen)
-gen_model = torch.nn.DataParallel(gen_model, device_ids=[0]).eval()
+
+
+
 
 # 加载FAISS索引
 index_path = "../RAG/faiss_index/embedding.index"
@@ -54,24 +50,30 @@ with open("../RAG/faiss_index/entries.txt", "r", encoding="utf-8") as f:
 
 # 函数：生成答案
 def generate_answer(context, query):
-    input_text = f"法律问题:{query}\n回答可能会用到的参考文献:{context}\n只要你觉得问题已经回答完成请及时停止"
-    inputs = gen_tokenizer(input_text, return_tensors="pt", truncation=True, max_length=gen_tokenizer.model_max_length).to(device_gen)
-    gen_kwargs = {
-        "max_length": 1024,  # 增加生成文本的最大长度
-        "min_length": 100,   # 设置生成文本的最小长度
-        "num_return_sequences": 1,
-        "do_sample": True,
-        "temperature": 0.7,  # 调整温度
-        "top_p": 0.9,        # 调整top_p以增加生成的多样性
-        "top_k": 50          # 调整top_k以增加生成的多样性
-    }
-
+    input_text = f"法律问题:{query}\n回答可能会用到的参考文献:{context}"
+    print(input_text)
+    inputs = gen_tokenizer.apply_chat_template([{"role": "user", "content": input_text}],
+                                       add_generation_prompt=True,
+                                       tokenize=True,
+                                       return_tensors="pt",
+                                       return_dict=True
+                                       )
+    inputs = inputs.to(device_gen)
+    gen_model = AutoModelForCausalLM.from_pretrained(
+    gen_model_path,
+    torch_dtype=torch.bfloat16,
+    low_cpu_mem_usage=True,
+    trust_remote_code=True
+    ).to(device_gen).eval()
+    gen_kwargs = {"max_length": 2500, "do_sample": True, "top_k": 1}
 
     with torch.no_grad():
-        outputs = gen_model.module.generate(**inputs, **gen_kwargs)
-        answer = gen_tokenizer.decode(outputs[0], skip_special_tokens=True)
+        answer = gen_model.generate(**inputs, **gen_kwargs)
+        answer = answer[:, inputs['input_ids'].shape[1]:]
+        answer = gen_tokenizer.decode(answer[0], skip_special_tokens=True)
+        print("\n"+answer)
     # 去除input_text相关内容
-    answer = answer.replace(input_text, "").strip()
+    # answer = answer.replace(input_text, "").strip()
     return answer
 
 # 函数：进行检索
@@ -109,7 +111,7 @@ st.title("法律问题问答系统")
 query = st.text_input("请输入您的法律问题：")
 if query:
     with st.spinner('处理中...'):
-        answer, results = search(query, top_k=1)  
+        answer, results = search(query, top_k=3)  
     st.subheader("基于参考文献的回答:")
     st.write(answer)
     # 在侧边栏展示参考文献
