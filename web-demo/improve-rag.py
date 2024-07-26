@@ -51,7 +51,6 @@ with open("../RAG/faiss_index/entries.txt", "r", encoding="utf-8") as f:
 # 函数：生成答案
 def generate_answer(context, query):
     input_text = f"法律问题:{query}\n回答可能会用到的参考文献:{context}"
-    print(input_text)
     inputs = gen_tokenizer.apply_chat_template([{"role": "user", "content": input_text}],
                                        add_generation_prompt=True,
                                        tokenize=True,
@@ -71,7 +70,6 @@ def generate_answer(context, query):
         answer = gen_model.generate(**inputs, **gen_kwargs)
         answer = answer[:, inputs['input_ids'].shape[1]:]
         answer = gen_tokenizer.decode(answer[0], skip_special_tokens=True)
-        print("\n"+answer)
     # 去除input_text相关内容
     # answer = answer.replace(input_text, "").strip()
     return answer
@@ -104,14 +102,14 @@ def search(query, top_k):
     return response, filtered_results
 
 # Streamlit 界面
-st.title("法律问题问答系统")
+st.title("智能法律问答系统")
 
 
 # 示例查询
 query = st.text_input("请输入您的法律问题：")
 if query:
     with st.spinner('处理中...'):
-        answer, results = search(query, top_k=1)  
+        answer, results = search(query, top_k=3)
     st.subheader("基于参考文献的回答:")
     st.write(answer)
     # 在侧边栏展示参考文献
