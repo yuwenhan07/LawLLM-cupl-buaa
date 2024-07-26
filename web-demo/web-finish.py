@@ -119,7 +119,7 @@ if st.session_state['preprocess_done']:
     if st.button('一键复制'):
         st.session_state['copy_processed'] = True
         st.session_state['preprocess_done'] = False
-        st.experimental_rerun()
+        st.rerun()
 
 st.sidebar.subheader("模型配置")
 option = st.sidebar.selectbox(
