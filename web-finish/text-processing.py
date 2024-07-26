@@ -41,7 +41,7 @@ def load_models_and_tokenizers(model_id):
 # 数据预处理函数
 def data_process(text):
     # 定义标点符号和特殊字母
-    punctuation = '''，。、:；（）ＸX×xa"“”,<《》【】-+=_'''
+    punctuation = '''，。、:；（）ＸX×xa"“”,<《》'''
     line1 = re.sub(u"（.*?）", "", text)  # 去除括号内注释
     line2 = re.sub("[%s]+" % punctuation, "", line1)  # 去除标点、特殊字母
     return line2
