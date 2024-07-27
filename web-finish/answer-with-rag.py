@@ -6,7 +6,7 @@ from transformers import AutoTokenizer, AutoModel, AutoModelForCausalLM
 import numpy as np
 
 # 设置环境变量
-os.environ["CUDA_VISIBLE_DEVICES"] = "6,7"
+os.environ["CUDA_VISIBLE_DEVICES"] = "0,1"
 
 # 路径设置
 tokenizer_path = "../BAAI_bge-m3"
