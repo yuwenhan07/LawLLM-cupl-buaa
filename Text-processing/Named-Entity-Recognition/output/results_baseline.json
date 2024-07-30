@@ -1,0 +1,502 @@
+[
+    {
+        "input": "被害人报案总价值2121余元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 2121余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 2121余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None"
+    },
+    {
+        "input": "2020年06月25日00点00分，被告人赵某在康乐小区砸碎被害人赵某某的车窗玻璃，盗窃照相机一台。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: 赵某; 受害人: 赵某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 照相机一台; 作案工具: None; 时间: 2020年06月25日00点00分; 地点: 康乐小区; 组织机构: None"
+    },
+    {
+        "input": "被害人报案总价值3876余元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 3876余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 3876余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None"
+    },
+    {
+        "input": "2020年05月08日00点00分，被告人王某在富华小区砸碎被害人杨某某的车窗玻璃，盗窃笔记本电脑一台。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: 王某; 受害人: 杨某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 笔记本电脑一台; 作案工具: None; 时间: 2020年05月08日00点00分; 地点: 富华小区; 组织机构: None"
+    },
+    {
+        "input": "被害人报案总价值2767余元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 2767余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 2767余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None"
+    },
+    {
+        "input": "2021年07月31日00点00分，被告人王某某在春风小区砸碎被害人张某某的车窗玻璃，盗窃珠宝一件。",
+        "predicted": "犯罪嫌疑人: 王某某; 受害人: 张某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 珠宝一件; 作案工具: None; 时间: 2021年07月31日00点00分; 地点: 春风小区; 组织机构: None",
+        "expected": "犯罪嫌疑人: 王某某; 受害人: 张某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 珠宝一件; 作案工具: None; 时间: 2021年07月31日00点00分; 地点: 春风小区; 组织机构: None"
+    },
+    {
+        "input": "被害人报案总价值533余元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 533余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 533余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None"
+    },
+    {
+        "input": "2019年08月11日00点00分，被告人赵某在东风小区砸碎被害人陈某某的车窗玻璃，盗窃照相机一台。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: 赵某; 受害人: 陈某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 照相机一台; 作案工具: None; 时间: 2019年08月11日00点00分; 地点: 东风小区; 组织机构: None"
+    },
+    {
+        "input": "被害人报案总价值4608余元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 4608余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 4608余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None"
+    },
+    {
+        "input": "2019年11月09日00点00分，被告人李某某在红星小区砸碎被害人周某某的车窗玻璃，盗窃摩托车一辆。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: 李某某; 受害人: 周某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 摩托车一辆; 作案工具: None; 时间: 2019年11月09日00点00分; 地点: 红星小区; 组织机构: None"
+    },
+    {
+        "input": "被害人报案总价值512余元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 512余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 512余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None"
+    },
+    {
+        "input": "2020年07月18日00点00分，被告人杨某在富华小区砸碎被害人杨某某的车窗玻璃，盗窃电动车一辆。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: 杨某; 受害人: 杨某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 电动车一辆; 作案工具: None; 时间: 2020年07月18日00点00分; 地点: 富华小区; 组织机构: None"
+    },
+    {
+        "input": "被害人报案总价值858余元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 858余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 858余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None"
+    },
+    {
+        "input": "2019年03月13日00点00分，被告人李某在春风小区砸碎被害人李某某的车窗玻璃，盗窃苹果手机一部。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: 李某; 受害人: 李某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 苹果手机一部; 作案工具: None; 时间: 2019年03月13日00点00分; 地点: 春风小区; 组织机构: None"
+    },
+    {
+        "input": "被害人报案总价值1895余元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 1895余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 1895余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None"
+    },
+    {
+        "input": "2019年03月20日00点00分，被告人赵某在翠园小区砸碎被害人周某某的车窗玻璃，盗窃照相机一台。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: 赵某; 受害人: 周某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 照相机一台; 作案工具: None; 时间: 2019年03月20日00点00分; 地点: 翠园小区; 组织机构: None"
+    },
+    {
+        "input": "被害人报案总价值2531余元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 2531余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 2531余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None"
+    },
+    {
+        "input": "2021年04月20日00点00分，被告人李某在康乐小区砸碎被害人孙某某的车窗玻璃，盗窃自行车一辆。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: 李某; 受害人: 孙某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 自行车一辆; 作案工具: None; 时间: 2021年04月20日00点00分; 地点: 康乐小区; 组织机构: None"
+    },
+    {
+        "input": "被害人报案总价值2597余元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 2597余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 2597余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None"
+    },
+    {
+        "input": "2017年10月24日00点00分，被告人刘某某在华光小区砸碎被害人李某某的车窗玻璃，盗窃摩托车一辆。",
+        "predicted": "犯罪嫌疑人: 刘某某; 受害人: 李某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 摩托车一辆; 作案工具: None; 时间: 2017年10月24日00点00分; 地点: 华光小区; 组织机构: None",
+        "expected": "犯罪嫌疑人: 刘某某; 受害人: 李某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 摩托车一辆; 作案工具: None; 时间: 2017年10月24日00点00分; 地点: 华光小区; 组织机构: None"
+    },
+    {
+        "input": "被害人报案总价值4185余元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 4185余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 4185余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None"
+    },
+    {
+        "input": "2019年06月08日00点00分，被告人张某在长兴小区砸碎被害人刘某某的车窗玻璃，盗窃笔记本电脑一台。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: 张某; 受害人: 刘某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 笔记本电脑一台; 作案工具: None; 时间: 2019年06月08日00点00分; 地点: 长兴小区; 组织机构: None"
+    },
+    {
+        "input": "被害人报案总价值1252余元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 1252余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 1252余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None"
+    },
+    {
+        "input": "2017年02月04日00点00分，被告人李某某在新村小区砸碎被害人黄某某的车窗玻璃，盗窃苹果手机一部。",
+        "predicted": "犯罪嫌疑人: 李某某; 受害人: 黄某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 苹果手机一部; 作案工具: None; 时间: 2017年02月04日00点00分; 地点: 新村小区; 组织机构: None",
+        "expected": "犯罪嫌疑人: 李某某; 受害人: 黄某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 苹果手机一部; 作案工具: None; 时间: 2017年02月04日00点00分; 地点: 新村小区; 组织机构: None"
+    },
+    {
+        "input": "被害人报案总价值4776余元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 4776余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 4776余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None"
+    },
+    {
+        "input": "2019年09月29日00点00分，被告人刘某某在翠园小区砸碎被害人杨某某的车窗玻璃，盗窃平板电脑一台。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: 刘某某; 受害人: 杨某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 平板电脑一台; 作案工具: None; 时间: 2019年09月29日00点00分; 地点: 翠园小区; 组织机构: None"
+    },
+    {
+        "input": "被害人报案总价值3756余元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 3756余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 3756余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None"
+    },
+    {
+        "input": "2023年01月29日00点00分，被告人刘某某在红星小区砸碎被害人孙某某的车窗玻璃，盗窃电动车一辆。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: 刘某某; 受害人: 孙某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 电动车一辆; 作案工具: None; 时间: 2023年01月29日00点00分; 地点: 红星小区; 组织机构: None"
+    },
+    {
+        "input": "被害人报案总价值3522余元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 3522余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 3522余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None"
+    },
+    {
+        "input": "2018年05月09日00点00分，被告人张某在红星小区砸碎被害人李某某的车窗玻璃，盗窃平板电脑一台。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: 张某; 受害人: 李某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 平板电脑一台; 作案工具: None; 时间: 2018年05月09日00点00分; 地点: 红星小区; 组织机构: None"
+    },
+    {
+        "input": "被害人报案总价值2850余元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 2850余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 2850余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None"
+    },
+    {
+        "input": "2022年04月12日00点00分，被告人李某某在南湖小区砸碎被害人赵某某的车窗玻璃，盗窃手表一只。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: 李某某; 受害人: 赵某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 手表一只; 作案工具: None; 时间: 2022年04月12日00点00分; 地点: 南湖小区; 组织机构: None"
+    },
+    {
+        "input": "被害人报案总价值846余元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 846余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 846余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None"
+    },
+    {
+        "input": "2023年02月04日00点00分，被告人周某在翠园小区砸碎被害人王某某的车窗玻璃，盗窃平板电脑一台。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: 周某; 受害人: 王某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 平板电脑一台; 作案工具: None; 时间: 2023年02月04日00点00分; 地点: 翠园小区; 组织机构: None"
+    },
+    {
+        "input": "被害人报案总价值995余元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 995余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 995余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None"
+    },
+    {
+        "input": "2021年05月08日00点00分，被告人张某某在福安小区砸碎被害人刘某某的车窗玻璃，盗窃现金500元。",
+        "predicted": "犯罪嫌疑人: 张某某; 受害人: 刘某某; 被盗货币: 现金500元; 物品价值: None; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: 2021年05月08日00点00分; 地点: 福安小区; 组织机构: None",
+        "expected": "犯罪嫌疑人: 张某某; 受害人: 刘某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 现金500元; 作案工具: None; 时间: 2021年05月08日00点00分; 地点: 福安小区; 组织机构: None"
+    },
+    {
+        "input": "被害人报案总价值3440余元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 3440余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 3440余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None"
+    },
+    {
+        "input": "2020年12月13日00点00分，被告人赵某在华光小区砸碎被害人张某某的车窗玻璃，盗窃苹果手机一部。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: 赵某; 受害人: 张某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 苹果手机一部; 作案工具: None; 时间: 2020年12月13日00点00分; 地点: 华光小区; 组织机构: None"
+    },
+    {
+        "input": "被害人报案总价值3504余元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 3504余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 3504余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None"
+    },
+    {
+        "input": "2023年06月02日00点00分，被告人陈某在长兴小区砸碎被害人李某某的车窗玻璃，盗窃笔记本电脑一台。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: 陈某; 受害人: 李某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 笔记本电脑一台; 作案工具: None; 时间: 2023年06月02日00点00分; 地点: 长兴小区; 组织机构: None"
+    },
+    {
+        "input": "被害人报案总价值1916余元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 1916余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 1916余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None"
+    },
+    {
+        "input": "2020年12月17日00点00分，被告人李某在华光小区砸碎被害人李某某的车窗玻璃，盗窃手表一只。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: 李某; 受害人: 李某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 手表一只; 作案工具: None; 时间: 2020年12月17日00点00分; 地点: 华光小区; 组织机构: None"
+    },
+    {
+        "input": "被害人报案总价值1125余元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 1125余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 1125余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None"
+    },
+    {
+        "input": "2017年01月28日00点00分，被告人周某在蓝天小区砸碎被害人李某某的车窗玻璃，盗窃现金500元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: 周某; 受害人: 李某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 现金500元; 作案工具: None; 时间: 2017年01月28日00点00分; 地点: 蓝天小区; 组织机构: None"
+    },
+    {
+        "input": "被害人报案总价值2728余元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 2728余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 2728余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None"
+    },
+    {
+        "input": "2020年01月29日00点00分，被告人刘某某在华光小区砸碎被害人周某某的车窗玻璃，盗窃电动车一辆。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: 刘某某; 受害人: 周某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 电动车一辆; 作案工具: None; 时间: 2020年01月29日00点00分; 地点: 华光小区; 组织机构: None"
+    },
+    {
+        "input": "被害人报案总价值981余元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 981余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 981余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None"
+    },
+    {
+        "input": "2023年05月10日00点00分，被告人张某在南湖小区砸碎被害人黄某某的车窗玻璃，盗窃自行车一辆。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: 张某; 受害人: 黄某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 自行车一辆; 作案工具: None; 时间: 2023年05月10日00点00分; 地点: 南湖小区; 组织机构: None"
+    },
+    {
+        "input": "被害人报案总价值4574余元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 4574余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 4574余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None"
+    },
+    {
+        "input": "2019年04月23日00点00分，被告人刘某某在福安小区砸碎被害人张某某的车窗玻璃，盗窃珠宝一件。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: 刘某某; 受害人: 张某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 珠宝一件; 作案工具: None; 时间: 2019年04月23日00点00分; 地点: 福安小区; 组织机构: None"
+    },
+    {
+        "input": "被害人报案总价值2846余元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 2846余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 2846余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None"
+    },
+    {
+        "input": "2022年11月22日00点00分，被告人王某某在长兴小区砸碎被害人黄某某的车窗玻璃，盗窃自行车一辆。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: 王某某; 受害人: 黄某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 自行车一辆; 作案工具: None; 时间: 2022年11月22日00点00分; 地点: 长兴小区; 组织机构: None"
+    },
+    {
+        "input": "被害人报案总价值2406余元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 2406余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 2406余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None"
+    },
+    {
+        "input": "2017年07月30日00点00分，被告人刘某某在东风小区砸碎被害人李某某的车窗玻璃，盗窃照相机一台。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: 刘某某; 受害人: 李某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 照相机一台; 作案工具: None; 时间: 2017年07月30日00点00分; 地点: 东风小区; 组织机构: None"
+    },
+    {
+        "input": "被害人报案总价值3305余元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 3305余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 3305余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None"
+    },
+    {
+        "input": "2020年03月20日00点00分，被告人张某在康乐小区砸碎被害人陈某某的车窗玻璃，盗窃手表一只。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: 张某; 受害人: 陈某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 手表一只; 作案工具: None; 时间: 2020年03月20日00点00分; 地点: 康乐小区; 组织机构: None"
+    },
+    {
+        "input": "被害人报案总价值2644余元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 2644余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 2644余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None"
+    },
+    {
+        "input": "2021年03月26日00点00分，被告人王某某在华光小区砸碎被害人黄某某的车窗玻璃，盗窃现金500元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: 王某某; 受害人: 黄某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 现金500元; 作案工具: None; 时间: 2021年03月26日00点00分; 地点: 华光小区; 组织机构: None"
+    },
+    {
+        "input": "被害人报案总价值2239余元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 2239余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 2239余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None"
+    },
+    {
+        "input": "2017年06月25日00点00分，被告人陈某在蓝天小区砸碎被害人杨某某的车窗玻璃，盗窃自行车一辆。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: 陈某; 受害人: 杨某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 自行车一辆; 作案工具: None; 时间: 2017年06月25日00点00分; 地点: 蓝天小区; 组织机构: None"
+    },
+    {
+        "input": "被害人报案总价值2229余元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 2229余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 2229余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None"
+    },
+    {
+        "input": "2020年05月09日00点00分，被告人周某在福安小区砸碎被害人刘某某的车窗玻璃，盗窃平板电脑一台。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: 周某; 受害人: 刘某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 平板电脑一台; 作案工具: None; 时间: 2020年05月09日00点00分; 地点: 福安小区; 组织机构: None"
+    },
+    {
+        "input": "被害人报案总价值4013余元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 4013余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 4013余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None"
+    },
+    {
+        "input": "2017年04月18日00点00分，被告人李某某在长兴小区砸碎被害人陈某某的车窗玻璃，盗窃手表一只。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: 李某某; 受害人: 陈某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 手表一只; 作案工具: None; 时间: 2017年04月18日00点00分; 地点: 长兴小区; 组织机构: None"
+    },
+    {
+        "input": "被害人报案总价值2028余元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 2028余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 2028余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None"
+    },
+    {
+        "input": "2018年11月14日00点00分，被告人赵某在春风小区砸碎被害人赵某某的车窗玻璃，盗窃平板电脑一台。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: 赵某; 受害人: 赵某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 平板电脑一台; 作案工具: None; 时间: 2018年11月14日00点00分; 地点: 春风小区; 组织机构: None"
+    },
+    {
+        "input": "被害人报案总价值4879余元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 4879余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 4879余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None"
+    },
+    {
+        "input": "2018年12月06日00点00分，被告人黄某在福安小区砸碎被害人王某某的车窗玻璃，盗窃自行车一辆。",
+        "predicted": "犯罪嫌疑人: 黄某; 受害人: 王某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 自行车一辆; 作案工具: None; 时间: 2018年12月06日00点00分; 地点: 福安小区; 组织机构: None",
+        "expected": "犯罪嫌疑人: 黄某; 受害人: 王某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 自行车一辆; 作案工具: None; 时间: 2018年12月06日00点00分; 地点: 福安小区; 组织机构: None"
+    },
+    {
+        "input": "被害人报案总价值3137余元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 3137余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 3137余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None"
+    },
+    {
+        "input": "2020年10月10日00点00分，被告人杨某在南湖小区砸碎被害人张某某的车窗玻璃，盗窃珠宝一件。",
+        "predicted": "犯罪嫌疑人: 杨某; 受害人: 张某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 珠宝一件; 作案工具: None; 时间: 2020年10月10日00点00分; 地点: 南湖小区; 组织机构: None",
+        "expected": "犯罪嫌疑人: 杨某; 受害人: 张某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 珠宝一件; 作案工具: None; 时间: 2020年10月10日00点00分; 地点: 南湖小区; 组织机构: None"
+    },
+    {
+        "input": "被害人报案总价值2314余元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 2314余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 2314余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None"
+    },
+    {
+        "input": "2020年11月30日00点00分，被告人王某在长兴小区砸碎被害人李某某的车窗玻璃，盗窃钱包一个。",
+        "predicted": "犯罪嫌疑人: 王某; 受害人: 李某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 钱包一个; 作案工具: None; 时间: 2020年11月30日00点00分; 地点: 长兴小区; 组织机构: None",
+        "expected": "犯罪嫌疑人: 王某; 受害人: 李某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 钱包一个; 作案工具: None; 时间: 2020年11月30日00点00分; 地点: 长兴小区; 组织机构: None"
+    },
+    {
+        "input": "被害人报案总价值4293余元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 4293余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 4293余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None"
+    },
+    {
+        "input": "2019年08月31日00点00分，被告人周某在福安小区砸碎被害人赵某某的车窗玻璃，盗窃摩托车一辆。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: 周某; 受害人: 赵某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 摩托车一辆; 作案工具: None; 时间: 2019年08月31日00点00分; 地点: 福安小区; 组织机构: None"
+    },
+    {
+        "input": "被害人报案总价值2887余元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 2887余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 2887余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None"
+    },
+    {
+        "input": "2022年10月18日00点00分，被告人周某在长兴小区砸碎被害人王某某的车窗玻璃，盗窃平板电脑一台。",
+        "predicted": "犯罪嫌疑人: 周某; 受害人: 王某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 平板电脑一台; 作案工具: None; 时间: 2022年10月18日00点00分; 地点: 长兴小区; 组织机构: None",
+        "expected": "犯罪嫌疑人: 周某; 受害人: 王某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 平板电脑一台; 作案工具: None; 时间: 2022年10月18日00点00分; 地点: 长兴小区; 组织机构: None"
+    },
+    {
+        "input": "被害人报案总价值1134余元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 1134余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 1134余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None"
+    },
+    {
+        "input": "2018年09月03日00点00分，被告人张某某在南湖小区砸碎被害人赵某某的车窗玻璃，盗窃钱包一个。",
+        "predicted": "犯罪嫌疑人: 张某某; 受害人: 赵某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 钱包一个; 作案工具: None; 时间: 2018年09月03日00点00分; 地点: 南湖小区; 组织机构: None",
+        "expected": "犯罪嫌疑人: 张某某; 受害人: 赵某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 钱包一个; 作案工具: None; 时间: 2018年09月03日00点00分; 地点: 南湖小区; 组织机构: None"
+    },
+    {
+        "input": "被害人报案总价值4260余元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 4260余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 4260余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None"
+    },
+    {
+        "input": "2023年01月04日00点00分，被告人王某某在长兴小区砸碎被害人孙某某的车窗玻璃，盗窃电动车一辆。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: 王某某; 受害人: 孙某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 电动车一辆; 作案工具: None; 时间: 2023年01月04日00点00分; 地点: 长兴小区; 组织机构: None"
+    },
+    {
+        "input": "被害人报案总价值4673余元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 4673余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 4673余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None"
+    },
+    {
+        "input": "2022年09月28日00点00分，被告人陈某在翠园小区砸碎被害人王某某的车窗玻璃，盗窃珠宝一件。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: 陈某; 受害人: 王某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 珠宝一件; 作案工具: None; 时间: 2022年09月28日00点00分; 地点: 翠园小区; 组织机构: None"
+    },
+    {
+        "input": "被害人报案总价值4901余元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 4901余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 4901余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None"
+    },
+    {
+        "input": "2017年02月16日00点00分，被告人刘某某在翠园小区砸碎被害人陈某某的车窗玻璃，盗窃笔记本电脑一台。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: 刘某某; 受害人: 陈某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 笔记本电脑一台; 作案工具: None; 时间: 2017年02月16日00点00分; 地点: 翠园小区; 组织机构: None"
+    },
+    {
+        "input": "被害人报案总价值4287余元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 4287余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 4287余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None"
+    },
+    {
+        "input": "2021年06月11日00点00分，被告人赵某在蓝天小区砸碎被害人张某某的车窗玻璃，盗窃苹果手机一部。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: 赵某; 受害人: 张某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 苹果手机一部; 作案工具: None; 时间: 2021年06月11日00点00分; 地点: 蓝天小区; 组织机构: None"
+    },
+    {
+        "input": "被害人报案总价值2390余元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 2390余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 2390余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None"
+    },
+    {
+        "input": "2020年03月30日00点00分，被告人张某在蓝天小区砸碎被害人赵某某的车窗玻璃，盗窃钱包一个。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: 张某; 受害人: 赵某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 钱包一个; 作案工具: None; 时间: 2020年03月30日00点00分; 地点: 蓝天小区; 组织机构: None"
+    },
+    {
+        "input": "被害人报案总价值788余元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 788余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 788余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None"
+    },
+    {
+        "input": "2018年12月01日00点00分，被告人李某在南湖小区砸碎被害人张某某的车窗玻璃，盗窃笔记本电脑一台。",
+        "predicted": "犯罪嫌疑人: 李某; 受害人: 张某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 笔记本电脑一台; 作案工具: None; 时间: 2018年12月01日00点00分; 地点: 南湖小区; 组织机构: None",
+        "expected": "犯罪嫌疑人: 李某; 受害人: 张某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 笔记本电脑一台; 作案工具: None; 时间: 2018年12月01日00点00分; 地点: 南湖小区; 组织机构: None"
+    },
+    {
+        "input": "被害人报案总价值4964余元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 4964余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 4964余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None"
+    },
+    {
+        "input": "2017年06月09日00点00分，被告人张某某在春风小区砸碎被害人杨某某的车窗玻璃，盗窃现金500元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: 张某某; 受害人: 杨某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 现金500元; 作案工具: None; 时间: 2017年06月09日00点00分; 地点: 春风小区; 组织机构: None"
+    },
+    {
+        "input": "被害人报案总价值2690余元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 2690余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 2690余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None"
+    },
+    {
+        "input": "2022年02月27日00点00分，被告人周某在新村小区砸碎被害人周某某的车窗玻璃，盗窃金项链一条。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: 周某; 受害人: 周某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 金项链一条; 作案工具: None; 时间: 2022年02月27日00点00分; 地点: 新村小区; 组织机构: None"
+    },
+    {
+        "input": "被害人报案总价值3229余元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 3229余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 3229余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None"
+    },
+    {
+        "input": "2022年03月17日00点00分，被告人张某在东风小区砸碎被害人王某某的车窗玻璃，盗窃笔记本电脑一台。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: 张某; 受害人: 王某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 笔记本电脑一台; 作案工具: None; 时间: 2022年03月17日00点00分; 地点: 东风小区; 组织机构: None"
+    },
+    {
+        "input": "被害人报案总价值2433余元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 2433余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 2433余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None"
+    },
+    {
+        "input": "2021年04月19日00点00分，被告人王某某在翠园小区砸碎被害人王某某的车窗玻璃，盗窃手表一只。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: 王某某; 受害人: 王某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 手表一只; 作案工具: None; 时间: 2021年04月19日00点00分; 地点: 翠园小区; 组织机构: None"
+    },
+    {
+        "input": "被害人报案总价值2655余元。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 2655余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: 2655余元; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None"
+    },
+    {
+        "input": "2020年12月29日00点00分，被告人李某在富华小区砸碎被害人刘某某的车窗玻璃，盗窃照相机一台。",
+        "predicted": "犯罪嫌疑人: None; 受害人: None; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: None; 作案工具: None; 时间: None; 地点: None; 组织机构: None",
+        "expected": "犯罪嫌疑人: 李某; 受害人: 刘某某; 被盗货币: None; 物品价值: None; 盗窃获利: None; 被盗物品: 照相机一台; 作案工具: None; 时间: 2020年12月29日00点00分; 地点: 富华小区; 组织机构: None"
+    }
+]

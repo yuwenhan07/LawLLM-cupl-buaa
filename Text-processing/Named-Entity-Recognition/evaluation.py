@@ -1,13 +1,10 @@
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "3"
-
+os['CUDA_VISIBLE_DEVICES'] = '3'
 import json
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from peft import PeftModel
 import argparse
-
-
 
 def predict(messages, model, tokenizer):
     device = "cuda"
@@ -97,6 +94,14 @@ def main(load_checkpoint):
     if finetune_model:
         ft_results = []
         for test_instance in test_data:
+            instruction = "你是一个法律命名实体识别的专家。请根据给定文本，从以下十个方面（犯罪嫌疑人、受害人、被盗货币、物品价值、盗窃获利、被盗物品、作案工具、时间、地点、组织机构）提取文中的实体，没有用None表示，并按照以下格式返回结果：[犯罪嫌疑人: xxx; 受害人： xxx; 被盗货币： None; ……]"
+            input_value = test_instance["context"]
+
+            messages = [
+                {"role": "system", "content": f"{instruction}"},
+                {"role": "user", "content": f"{input_value}"}
+            ]
+
             response = predict(messages, finetune_model, tokenizer)
             parsed_response = parse_response(response)
             formatted_response = format_response(parsed_response)
