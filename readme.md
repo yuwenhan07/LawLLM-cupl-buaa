@@ -66,7 +66,7 @@ bash download.sh
 
 #### 2. 基于 Lora 微调的法律文本处理
 
-进入 `web-finish` 文件夹，运行以下命令：
+进入 `web-final` 文件夹，运行以下命令：
 
 - **本地运行**：
   ```bash
@@ -96,7 +96,7 @@ bash download.sh
 
 3. **启动网页界面**：
 
-   进入 `web-finish` 文件夹，运行：
+   进入 `web-final` 文件夹，运行：
    - **本地运行**：
      ```bash
      streamlit run answer-with-rag.py
@@ -109,7 +109,7 @@ bash download.sh
 
 #### 4. 基于 COT 可解释性增强的智能司法决策框架
 
-进入 `web-finish` 文件夹，运行以下命令：
+进入 `web-final` 文件夹，运行以下命令：
 
 - **本地运行**：
   ```bash
