@@ -1,129 +1,123 @@
-## readme 系统使用手册
+## Law-LLM 系统使用手册
 
 ### 系统概述
 
-Law-LLM 项目结合了法律知识与人工智能技术，基于 GLM-4-Chat 模型，并通过 **Lora 微调**、**RAG（检索增强生成）** 和 **思维链（COT）** 技术进行增强。该系统旨在提供符合法律领域需求的智能化应用。
+Law-LLM 项目结合了法律知识与人工智能技术，基于 GLM-4-Chat 模型，并通过 **Lora 微调**、**RAG（检索增强生成）** 和 **思维链（COT）** 技术进行增强，旨在提供符合法律领域需求的智能化应用。
 
 ### 环境配置
 
-为了确保项目的顺利运行，推荐以下硬件和软件配置：
+为确保项目顺利运行，推荐以下硬件和软件配置：
 
 #### 1. 系统要求
 
 - **硬件**：
-  - **GPU**：至少需要一块 NVIDIA A100-PCIE-40GB GPU 来进行模型的训练和运行。对于 RAG（检索增强生成）的网页推理，需要至少两块 NVIDIA A100-PCIE-40GB GPU，以确保能够加载和运行多个模型及其推理过程。
+  - **GPU**：至少需要一块 NVIDIA A100-PCIE-40GB GPU 用于模型训练和运行。对于 RAG 的网页推理，需要至少两块 NVIDIA A100-PCIE-40GB GPU。
 
 - **软件**：
-  - **操作系统**：推荐使用 Linux 发行版（如 Ubuntu）或 Windows，确保系统能够支持所需的 GPU 驱动和依赖库。
-  - **Python**：要求 Python 版本 > 3.10。可以使用以下命令检查当前 Python 版本：
+  - **操作系统**：推荐使用 Linux 发行版（如 Ubuntu）或 Windows，以支持必要的 GPU 驱动和依赖库。
+  - **Python**：需要 Python 版本 3.10 以上。可以通过以下命令检查当前版本：
     ```bash
     python --version
     ```
-    或者
+    或
     ```bash
     python3 --version
     ```
-  - **依赖管理**：
-    - 使用 `pip` 来管理项目的 Python 包依赖，确保所有的依赖项都在虚拟环境中安装，以避免与系统其他项目的冲突。
+  - **依赖管理**：建议使用 `pip` 管理 Python 包依赖，并在虚拟环境中安装所有依赖项。
 
 #### 2. 虚拟环境配置
 
-为了更好地管理和隔离项目的依赖项，建议使用虚拟环境。以下是配置和使用虚拟环境的步骤：
+建议使用虚拟环境来管理和隔离项目的依赖项。以下是配置和使用虚拟环境的步骤：
 
 1. **创建虚拟环境**：
-
-   在项目目录中执行以下命令创建虚拟环境：
-
    ```bash
    python -m venv venv
    ```
 
-   其中 `venv` 是虚拟环境的名称，你可以根据需要修改。
-
 2. **激活虚拟环境**：
-
-   根据操作系统的不同，激活虚拟环境的命令有所不同：
-
    - **Windows**:
      ```bash
      .\venv\Scripts\activate
      ```
-
    - **macOS/Linux**:
      ```bash
      source venv/bin/activate
      ```
 
-   激活后，命令提示符会显示当前的虚拟环境名称，表明你已经进入该虚拟环境。
-
 3. **安装项目依赖**：
-
-   在虚拟环境激活的情况下，使用以下命令安装项目所需的所有依赖项：
-
    ```bash
    pip install -r requirements.txt
    ```
 
-   该命令将根据 `requirements.txt` 文件中的列表安装相应的包及其版本。
-
 4. **确认依赖项安装**：
-
-   使用以下命令查看已安装的包，确保所有依赖项都已正确安装：
-
    ```bash
    pip list
    ```
 
-   这将列出当前虚拟环境中所有安装的包及其版本。
-
-完成这些步骤后，你的开发环境就已配置完毕。每次使用项目之前，请确保先激活虚拟环境，以保证你使用的是项目所需的特定依赖项版本。
-
 ### 运行系统
-先在根目录下运行`download.sh`文件，下载GLM-4-9B-Chat模型权重，以保证后续使用。
 
-1. **基于 Lora 微调的法律文本处理**
-   - **训练代码**：
-    所有训练代码在`finetune`文件夹下，包含数据、训练代码、推理代码等
-     - **`train-xxx.py`**：使用 Lora 微调技术对 GLM-4 模型进行特定法律任务的训练，包括环境设置、数据处理、模型加载和训练配置等。
-     - **`inference.py`**：加载预训练和微调后的模型，根据用户输入执行特定的法律任务。
-   - **文本处理任务**：
-     - **数据预处理**、**法律文档撰写**、**律师咨询**、**法律阅读理解**、**法律文本摘要**、**命名实体识别（NER）**。
-   - **网页演示**：基于 Streamlit 的网页界面，展示文本处理任务，包括数据预处理和不同法律任务的回复。
+在开始使用前，需要下载必要的模型权重和其他资源。
 
-   **使用方法**：
-   进入 `web-finish`文件夹下
-   - 本地运行：`streamlit run text-processing.py`。
-   - 服务器部署：`streamlit run text-processing.py --server.address 0.0.0.0`。
+#### 1. 下载 GLM-4-9B-Chat 模型权重
 
-2. **基于 RAG 的法律问题回复**
-   - **RAG 知识库构建**：
-    构建方式在`RAG`文件夹下
-     - 使用 BAAI_bge-m3 编码器对法律文献进行编码，并构建 FAISS 索引以提高检索效率。
-   - **检索增强生成**：
-     - 将用户输入与检索到的相关法律文本结合，生成更准确的法律回复。
-   - **网页演示**：基于 Streamlit 的网页界面，展示 RAG 技术在法律问答中的应用。
+```bash
+bash download.sh
+```
 
-   **使用方法**：
-    在根目录文件夹下，运行`download_tokenizer.py`下载所需的BAAAI_bge-m3对应的tokenizer。
-   进入`RAG/code`文件夹，运行`ff.py`文件，在`faiss_index`文件夹下生成对应的检索文件。
-   进入 `insight` 文件夹下
-   进入 `web-finish`文件夹下
-   - 本地运行：`streamlit run answer-with-rag.py`。
-   - 服务器部署：`streamlit run answer-with-rag.py --server.address 0.0.0.0`。
+#### 2. 基于 Lora 微调的法律文本处理
 
-3. **基于 COT 增强的司法决策框架**
-   - **系统设计与架构**：
-     - **案件描述输入与解析**：用户输入的案件描述被解析以提取关键法律事实。
-     - **罪名预测与法条匹配**：预测可能的罪名并匹配相关法律条文。
-     - **构成要件分析**：列出并分析每个预测罪名的法律构成要件。
-     - **违法性与责任性分析**：检查是否存在违法阻却事由及责任能力。
-     - **基准刑与刑罚计算**：根据法律条文和案件特殊情况计算基准刑并考虑减刑和加重情节。
-     - **减刑与加重因素**：识别并分析减刑和加重因素。
-     - **最终刑罚计算**：计算最终的刑罚建议，并提供详细解释。
+进入 `web-finish` 文件夹，运行以下命令：
 
-   **网页演示**：基于 Streamlit 的网页界面，展示司法决策过程。
+- **本地运行**：
+  ```bash
+  streamlit run text-processing.py
+  ```
 
-   **使用方法**：
-   - 本地运行：`streamlit run insight.py`。
-   - 服务器部署：`streamlit run insight.py --server.address 0.0.0.0`。
+- **服务器部署**：
+  ```bash
+  streamlit run text-processing.py --server.address 0.0.0.0
+  ```
+
+#### 3. 基于 RAG 的法律问题回复
+
+依次执行以下步骤：
+
+1. **下载 tokenizer**：
+   ```bash
+   python download_tokenizer.py
+   ```
+
+2. **生成 FAISS 索引**：
+
+   进入 `RAG/code` 文件夹，运行：
+   ```bash
+   python ff.py
+   ```
+
+3. **启动网页界面**：
+
+   进入 `web-finish` 文件夹，运行：
+   - **本地运行**：
+     ```bash
+     streamlit run answer-with-rag.py
+     ```
+
+   - **服务器部署**：
+     ```bash
+     streamlit run answer-with-rag.py --server.address 0.0.0.0
+     ```
+
+#### 4. 基于 COT 增强的司法决策框架
+
+进入 `web-finish` 文件夹，运行以下命令：
+
+- **本地运行**：
+  ```bash
+  streamlit run insight.py
+  ```
+
+- **服务器部署**：
+  ```bash
+  streamlit run insight.py --server.address 0.0.0.0
+  ```
 
