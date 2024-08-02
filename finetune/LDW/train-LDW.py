@@ -253,7 +253,7 @@ args = TrainingArguments(
 )
 
 swanlab_callback = SwanLabCallback(
-    project="GLM4-LDE-fintune",
+    project="GLM4-LDW-fintune",
     experiment_name="GLM4-9B-Chat",
     description="使用智谱GLM4-9B-Chat模型在法律文本续写上进行微调。",
     config={

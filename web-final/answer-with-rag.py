@@ -90,7 +90,7 @@ def search(query, top_k):
 st.set_page_config(page_title="智能法律问答系统", page_icon=":gavel:", layout="wide")
 
 st.title("智能法律问答系统 :robot_face:")
-st.markdown("### 基于AI的法律问题解答平台，提供专业的法律咨询服务。")
+st.markdown("#### 基于RAG的智能法律问题解答平台，提供最精准的法律解答")
 
 # 添加侧边栏和样式
 st.sidebar.title("参考文献")

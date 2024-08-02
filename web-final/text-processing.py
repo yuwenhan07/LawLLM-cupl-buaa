@@ -53,45 +53,59 @@ st.title("Lawllm :robot_face:")
 # 添加自定义CSS样式
 st.markdown("""
     <style>
-        /* 设置主要内容区的背景颜色、内边距和边框圆角 */
-        .main {
-            background-color: #FFFFFF;  /* 设置背景颜色为淡灰蓝色 */
-            padding: 20px;  /* 内边距为20像素 */
-            border-radius: 10px;  /* 边框圆角半径为10像素 */
-        }
-        
-        /* 设置侧边栏内容区的背景颜色和边框圆角 */
-        .sidebar .sidebar-content {
-            background-color: #dfe6f0;  /* 设置背景颜色为更浅的灰蓝色 */
-            border-radius: 10px;  /* 边框圆角半径为10像素 */
-        }
-        
-        /* 设置页脚的样式，使其固定在页面底部 */
-        .footer {
-            position: fixed;  /* 固定定位 */
-            bottom: 0;  /* 贴近页面底部 */
-            width: 100%;  /* 宽度占满页面 */
-            color: white;  /* 文字颜色为白色 */
-            text-align: center;  /* 文字居中对齐 */
-            padding: 10px;  /* 内边距为10像素 */
-            background: #2583E5;  /* 背景颜色为蓝色 */
-        }
-        
-        /* 设置按钮的样式 */
-        .stButton>button {
-            background-color: #2583E5;  /* 按钮背景颜色为蓝色 */
-            color: white;  /* 文字颜色为白色 */
-            border-radius: 10px;  /* 边框圆角半径为10像素 */
-            padding: 10px 20px;  /* 上下内边距为10像素，左右内边距为20像素 */
-            font-size: 16px;  /* 字体大小为16像素 */
-            margin: 10px 0;  /* 上下外边距为10像素 */
-        }
-        
-        /* 设置文本区域的样式 */
-        .stTextArea textarea {
-            border-radius: 10px;  /* 边框圆角半径为10像素 */
-        }
-    </style>
+    /* 设置主要内容区的背景颜色、内边距和边框圆角 */
+    .main {
+        background-color: #FFFFFF;  /* 设置背景颜色为白色 */
+        padding: 20px;  /* 内边距为20像素 */
+        border-radius: 10px;  /* 边框圆角半径为10像素 */
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* 添加轻微阴影 */
+    }
+    
+    /* 设置侧边栏内容区的背景颜色和边框圆角 */
+    .sidebar .sidebar-content {
+        background-color: #dfe6f0;  /* 设置背景颜色为浅灰蓝色 */
+        border-radius: 10px;  /* 边框圆角半径为10像素 */
+        padding: 10px; /* 添加内边距 */
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* 添加轻微阴影 */
+    }
+    
+    /* 设置页脚的样式，使其固定在页面底部 */
+    .footer {
+        position: fixed;  /* 固定定位 */
+        bottom: 0;  /* 贴近页面底部 */
+        width: 100%;  /* 宽度占满页面 */
+        color: white;  /* 文字颜色为白色 */
+        text-align: center;  /* 文字居中对齐 */
+        padding: 10px;  /* 内边距为10像素 */
+        background: #2583E5;  /* 背景颜色为深蓝色 */
+        box-shadow: 0px -2px 6px rgba(0, 0, 0, 0.1); /* 添加上方阴影 */
+    }
+    
+    /* 设置按钮的样式 */
+    .stButton>button {
+        background-color: #2583E5;  /* 按钮背景颜色为深蓝色 */
+        color: white;  /* 文字颜色为白色 */
+        border-radius: 10px;  /* 边框圆角半径为10像素 */
+        padding: 10px 20px;  /* 上下内边距为10像素，左右内边距为20像素 */
+        font-size: 16px;  /* 字体大小为16像素 */
+        margin: 10px 0;  /* 上下外边距为10像素 */
+        border: none;  /* 去除默认边框 */
+        cursor: pointer; /* 鼠标悬停时显示为手指 */
+        transition: background-color 0.3s ease; /* 添加平滑的背景色变化效果 */
+    }
+
+    .stButton>button:hover {
+        background-color: #1e6bb8;  /* 鼠标悬停时背景颜色变为更深的蓝色 */
+    }
+    
+    /* 设置文本区域的样式 */
+    .stTextArea textarea {
+        border-radius: 10px;  /* 边框圆角半径为10像素 */
+        border: 1px solid #ccc; /* 设置边框颜色为浅灰色 */
+        padding: 10px; /* 添加内边距 */
+        box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.1); /* 添加内部阴影 */
+    }
+</style>
 """, unsafe_allow_html=True)
 
 # 初始化会话状态
@@ -150,7 +164,7 @@ if st.sidebar.button('运行'):
             model, tokenizer = load_models_and_tokenizers("../finetune/output/Lawer/checkpoint-400")
             instruction = ("假设你是一名律师，请回答下面这个真实情景下的中文法律咨询问题。")
         elif option == '法律文本续写':
-            model, tokenizer = load_models_and_tokenizers("../finetune/output/LDW/checkpoint-400")
+            model, tokenizer = load_models_and_tokenizers("../finetune/output/LDW/checkpoint-300")
             instruction = ("请你根据下面中括号里的'诉讼请求'和'审理查明'内容生成对应的'本院认为'内容。")
         elif option == '法律文书摘要生成':
             model, tokenizer = load_models_and_tokenizers("../finetune/output/LTS/checkpoint-100")
@@ -172,6 +186,7 @@ if st.sidebar.button('运行'):
     elif option == '法律文本续写':
         st.success('回答生成成功!')
         st.subheader("本院认为续写如下")
+        response = response + "。"
         st.write(response)
     elif option == '法律文书摘要生成':
         st.success('回答生成成功!')

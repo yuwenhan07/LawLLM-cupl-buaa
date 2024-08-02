@@ -18,7 +18,7 @@ from itertools import islice
 def chatchat(content):
     inputs = tokenizer.apply_chat_template([{"role": "user", "content": content}], add_generation_prompt=True, tokenize=True, return_tensors="pt", return_dict=True)
     inputs = inputs.to(device)
-    gen_kwargs = {"max_length": 1000, "do_sample": True, "top_k": 60}
+    gen_kwargs = {"max_length": 2500, "do_sample": True, "top_k": 60}
     with torch.no_grad():
         outputs = model.generate(**inputs, **gen_kwargs)
         outputs = outputs[:, inputs['input_ids'].shape[1]:]
