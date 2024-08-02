@@ -161,9 +161,23 @@ if st.sidebar.button('运行'):
         ]
 
         response = predict(messages, model, tokenizer, device)
-    st.success('回答生成成功!')
-    st.subheader("模型回答如下")
-    st.write(response)
+    if option == '命名实体识别专家':
+        st.success('回答生成成功!')
+        st.subheader("命名实体结果如下")
+        st.write(response)
+    elif option == '法律支持':
+        st.success('回答生成成功!')
+        st.subheader("法律支持回答如下")
+        st.write(response)
+    elif option == '法律文本续写':
+        st.success('回答生成成功!')
+        st.subheader("本院认为续写如下")
+        st.write(response)
+    elif option == '法律文书摘要生成':
+        st.success('回答生成成功!')
+        st.subheader("法律文本摘要回答如下")
+        st.write(response)
+
 else:
     st.info("请选择模型功能并输入内容，点击运行以获取回答。")
 
