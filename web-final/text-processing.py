@@ -156,7 +156,7 @@ if st.sidebar.button('运行'):
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     with st.spinner('正在加载模型并生成答案'):
         if option == '命名实体识别专家':
-            model, tokenizer = load_models_and_tokenizers("../finetune/output/NER/checkpoint-1100")
+            model, tokenizer = load_models_and_tokenizers("../finetune/output/NER/checkpoint-800")
             instruction = ("你是一个法律命名实体识别的专家。请根据给定文本，从以下十个方面（犯罪嫌疑人、受害人、被盗货币、物品价值、"
                            "盗窃获利、被盗物品、作案工具、时间、地点、组织机构）提取文中的实体，没有用None表示，并按照以下格式返回结果："
                            "[犯罪嫌疑人: xxx; 受害人： xxx; 被盗货币： None; ……]")
