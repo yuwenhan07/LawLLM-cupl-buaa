@@ -53,8 +53,9 @@ def search(query, top_k=5):
     return filtered_results
 
 # 示例查询
-query = "如果我在驾驶过程中不小心撞人了，我应该怎么办？"
+query = "我国的立法依据是什么？"
 results = search(query)
 
+print(f"查询: {query}")
 for (filename, entry), distance in results:
     print(f"文件: {filename}, 条目: {entry.strip()}, 距离: {distance}")

@@ -110,7 +110,7 @@ def rag(query, top_k=5, similarity_threshold=0.9, max_results=3):
 
 # 示例查询
 query = input("请输入您的法律问题：")
-answer, results = rag(query, top_k=10, max_results=3)  # top_k 设为10以获取更多候选结果用于去重
+answer, results = rag(query, top_k=10, max_results=3) 
 
 
 print(f"基于参考文献的回答:{answer}")
