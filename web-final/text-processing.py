@@ -105,8 +105,16 @@ st.markdown("""
         padding: 10px; /* 添加内边距 */
         box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.1); /* 添加内部阴影 */
     }
+    
+    /* 设置输出结果的字体大小 */
+    .large-font {
+        font-size: 20px;  /* 设置字体大小为20像素 */
+        line-height: 1.5; /* 设置行高 */
+        color: #333;  /* 设置文字颜色为深灰色 */
+    }
 </style>
 """, unsafe_allow_html=True)
+
 
 # 初始化会话状态
 if 'processed_cases' not in st.session_state:
@@ -178,21 +186,20 @@ if st.sidebar.button('运行'):
     if option == '命名实体识别专家':
         st.success('回答生成成功!')
         st.subheader("命名实体结果如下")
-        st.write(response)
+        st.markdown(f'<div class="large-font">{response}</div>', unsafe_allow_html=True)
     elif option == '法律支持':
         st.success('回答生成成功!')
         st.subheader("法律支持回答如下")
-        st.write(response)
+        st.markdown(f'<div class="large-font">{response}</div>', unsafe_allow_html=True)
     elif option == '法律文本续写':
         st.success('回答生成成功!')
         st.subheader("本院认为续写如下")
         response = response + "。"
-        st.write(response)
+        st.markdown(f'<div class="large-font">{response}</div>', unsafe_allow_html=True)
     elif option == '法律文书摘要生成':
         st.success('回答生成成功!')
         st.subheader("法律文本摘要回答如下")
-        st.write(response)
-
+        st.markdown(f'<div class="large-font">{response}</div>', unsafe_allow_html=True)
 else:
     st.info("请选择模型功能并输入内容，点击运行以获取回答。")
 
