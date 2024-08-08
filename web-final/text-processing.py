@@ -185,20 +185,28 @@ if st.sidebar.button('运行'):
         response = predict(messages, model, tokenizer, device)
     if option == '命名实体识别专家':
         st.success('回答生成成功!')
-        st.subheader("命名实体结果如下")
+        st.subheader("法律文本：")
+        st.markdown(f'<div class="large-font">{input_value}</div>', unsafe_allow_html=True)
+        st.subheader("命名实体结果：")
         st.markdown(f'<div class="large-font">{response}</div>', unsafe_allow_html=True)
     elif option == '法律支持':
         st.success('回答生成成功!')
-        st.subheader("法律支持回答如下")
+        st.subheader("法律问题：")
+        st.markdown(f'<div class="large-font">{input_value}</div>', unsafe_allow_html=True)
+        st.subheader("法律支持回答：")
         st.markdown(f'<div class="large-font">{response}</div>', unsafe_allow_html=True)
     elif option == '法律文本续写':
         st.success('回答生成成功!')
-        st.subheader("本院认为续写如下")
+        st.subheader("诉讼请求和审理查明：")
+        st.markdown(f'<div class="large-font">{input_value}</div>', unsafe_allow_html=True)
+        st.subheader("本院认为：")
         response = response + "。"
         st.markdown(f'<div class="large-font">{response}</div>', unsafe_allow_html=True)
     elif option == '法律文书摘要生成':
         st.success('回答生成成功!')
-        st.subheader("法律文本摘要回答如下")
+        st.subheader("法律长文本：")
+        st.markdown(f'<div class="large-font">{input_value}</div>', unsafe_allow_html=True)
+        st.subheader("文本摘要：")
         st.markdown(f'<div class="large-font">{response}</div>', unsafe_allow_html=True)
 else:
     st.info("请选择模型功能并输入内容，点击运行以获取回答。")
