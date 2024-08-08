@@ -124,7 +124,8 @@ bash download.sh
 ### 运行结果
 #### 基于lora微调的法律文本处理web-demo与运行结果
 ![alt text](img/text-processing/text-processing-web-demo.png)
-![alt text](img/text-processing/text-processing-data-processing.png) ![alt text](img/text-processing/text-processing-NER-demo.png) 
+![alt text](img/text-processing/text-processing-data-processing.png) 
+![alt text](img/text-processing/text-法律支持-demo.png)
 
 #### 基于RAG的法律问题智能回复
 ![alt text](img/answer-with-rag/answer-with-rag-web-demo.png)
@@ -132,6 +133,4 @@ bash download.sh
 
 #### 基于 COT 可解释性增强的智能司法决策框架
  ![alt text](img/insight/web-demo.jpg)
- ![alt text](img/insight/insight1.png) 
- ![alt text](img/insight/insight2.png)
-![alt text](img/insight/ingisht3.png) 
+ ![alt text](img/insight/INSIGHT洞见.jpg)
