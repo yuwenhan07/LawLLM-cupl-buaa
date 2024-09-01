@@ -1,12 +1,13 @@
+import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "2"
+
 import streamlit as st
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from peft import PeftModel
-import os
 import re
 from random import shuffle
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "8"
 
 # 定义预测函数
 def predict(messages, model, tokenizer, device):

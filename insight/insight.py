@@ -1,10 +1,12 @@
+import os
+from transformers import AutoTokenizer, AutoModelForCausalLM
+os.environ["CUDA_VISIBLE_DEVICES"] = "3"
 import json
 import difflib
 import torch
 import streamlit as st
 import re
-import os
-from transformers import AutoTokenizer, AutoModelForCausalLM
+
 
 # 设置设备为CUDA
 device = "cuda"
