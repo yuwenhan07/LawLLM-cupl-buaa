@@ -250,6 +250,23 @@ def main():
 
         placeholder_crime = st.empty()
         placeholder_law_sidebar = st.sidebar.empty()
+        # 输入框样式
+        st.markdown(
+        """
+        <style>
+        /* 调整侧边栏宽度 */
+        .css-1d391kg {
+            width: 650px;
+        }
+        
+        /* 侧边栏内部样式 */
+        .css-1q8dd3e {
+            font-size: 20px;
+            padding: 10px;
+        }
+        </style>
+        """, unsafe_allow_html=True)
+
         
         placeholder_crime.markdown(f'''
     <div style="background-color:#f6d9d9; padding:10px; border-radius:5px; margin-bottom: 10px;">

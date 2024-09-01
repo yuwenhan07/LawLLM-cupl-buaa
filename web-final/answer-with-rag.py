@@ -100,6 +100,17 @@ st.sidebar.markdown("在这里查看用到的参考文献。")
 st.markdown(
     """
     <style>
+    /* 调整侧边栏宽度 */
+    .css-1d391kg {
+        width: 350px;
+    }
+    
+    /* 侧边栏内部样式 */
+    .css-1q8dd3e {
+        font-size: 20px;
+        padding: 10px;
+    }
+    <style>
     .css-1q8dd3e {
         font-size: 20px;
         padding: 10px;
@@ -138,7 +149,6 @@ if query:
     st.subheader("基于参考文献的回答:")
     st.write(answer)
     
-    st.sidebar.subheader("参考文献:")
     for (filename, entry) in results:
         st.sidebar.markdown(f"**文件:** {filename}\n- **条目:** {entry.strip()}")
 
