@@ -15,15 +15,17 @@ def dict_to_markdown_table_from_str(data_str):
     data = json.loads(data_str)
     
     # Creating the markdown table header
-    markdown_table = "| 命名实体 | 法律文本 |\n"
-    markdown_table += "|-------|------|\n"
+    markdown_table = "<table style='font-size:18px;'>"
+    markdown_table += "<tr><th>命名实体</th><th>法律文本</th></tr>\n"
     
     # Filling the markdown table rows
     for item in data:
-        markdown_table += f"| {item['label']} | {item['text']} |\n"
+        markdown_table += f"<tr><td>{item['label']}</td><td>{item['text']}</td></tr>\n"
     
-    # Ensure the table is properly formatted by returning the text without extra spaces or newlines
-    return markdown_table.strip()
+    # Closing the table tag
+    markdown_table += "</table>"
+    
+    return markdown_table
 
 
 # 定义预测函数
@@ -202,6 +204,7 @@ if st.sidebar.button('运行'):
 
         response = predict(messages, model, tokenizer, device)
     # 生成的Markdown表格在Streamlit中显示时要注意保留表格的结构
+    # 使用修改后的函数生成HTML表格并调整字体大小
     if option == '命名实体识别专家':
         st.success('回答生成成功!')
         st.subheader("法律文本：")
@@ -211,10 +214,10 @@ if st.sidebar.button('运行'):
         # 调整response处理逻辑以符合JSON格式
         response = response.replace("'", '"')
         
-        # 生成Markdown表格并输出
+        # 生成HTML表格并输出
         markdown_table = dict_to_markdown_table_from_str(response)
         
-        # 使用 `st.markdown` 显示表格
+        # 使用 `st.markdown` 显示表格，同时允许HTML
         st.markdown(markdown_table, unsafe_allow_html=True)
     elif option == '法律支持':
         st.success('回答生成成功!')
