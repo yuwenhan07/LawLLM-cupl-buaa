@@ -8,6 +8,23 @@ from peft import PeftModel
 import re
 from random import shuffle
 
+import json
+
+def dict_to_markdown_table_from_str(data_str):
+    # Parse the string input into a Python list of dictionaries
+    data = json.loads(data_str)
+    
+    # Creating the markdown table header
+    markdown_table = "| 命名实体 | 法律文本 |\n"
+    markdown_table += "|-------|------|\n"
+    
+    # Filling the markdown table rows
+    for item in data:
+        markdown_table += f"| {item['label']} | {item['text']} |\n"
+    
+    # Ensure the table is properly formatted by returning the text without extra spaces or newlines
+    return markdown_table.strip()
+
 
 # 定义预测函数
 def predict(messages, model, tokenizer, device):
@@ -184,12 +201,21 @@ if st.sidebar.button('运行'):
         ]
 
         response = predict(messages, model, tokenizer, device)
+    # 生成的Markdown表格在Streamlit中显示时要注意保留表格的结构
     if option == '命名实体识别专家':
         st.success('回答生成成功!')
         st.subheader("法律文本：")
         st.markdown(f'<div class="large-font">{input_value}</div>', unsafe_allow_html=True)
         st.subheader("命名实体结果：")
-        st.markdown(f'<div class="large-font">{response}</div>', unsafe_allow_html=True)
+        
+        # 调整response处理逻辑以符合JSON格式
+        response = response.replace("'", '"')
+        
+        # 生成Markdown表格并输出
+        markdown_table = dict_to_markdown_table_from_str(response)
+        
+        # 使用 `st.markdown` 显示表格
+        st.markdown(markdown_table, unsafe_allow_html=True)
     elif option == '法律支持':
         st.success('回答生成成功!')
         st.subheader("法律问题：")
