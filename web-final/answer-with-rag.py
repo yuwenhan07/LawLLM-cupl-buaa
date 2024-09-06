@@ -90,7 +90,7 @@ def search(query, top_k):
 st.set_page_config(page_title="智能法律问答系统", page_icon=":gavel:", layout="wide")
 
 st.title("智能法律问答系统 :robot_face:")
-st.markdown("#### 基于RAG的智能法律问题解答平台，提供最精准的法律解答")
+st.markdown("<div style='text-align: right; font-size: 24px;'> ————基于RAG的智能法律问题解答平台，提供精准的法律解答</div>", unsafe_allow_html=True)
 
 # 添加侧边栏和样式
 st.sidebar.title("参考文献")
@@ -110,7 +110,7 @@ st.markdown(
         font-size: 20px;
         padding: 10px;
     }
-    <style>
+
     .css-1q8dd3e {
         font-size: 20px;
         padding: 10px;
@@ -122,7 +122,7 @@ st.markdown(
         padding: 10px 20px;
     }
     .stSpinner {
-        color: #ff4b4b;
+        color: #2583E5;
     }
     /* 设置页脚的样式，使其固定在页面底部 */
     .footer {

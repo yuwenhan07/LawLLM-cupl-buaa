@@ -164,17 +164,20 @@ if st.session_state['preprocess_done']:
         st.rerun()
 
 st.sidebar.subheader("模型配置")
+# option = st.sidebar.selectbox(
+#     '请选择一个要运行的模型:',
+#     ('命名实体识别专家', '法律支持', '法律文本续写','法律文书摘要生成')
+# )
 option = st.sidebar.selectbox(
     '请选择一个要运行的模型:',
-    ('命名实体识别专家', '法律支持', '法律文本续写','法律文书摘要生成')
+    ('命名实体识别专家', '法律文本续写','法律文书摘要生成')
 )
-
 st.sidebar.subheader("输入文本")
 input_area_default = st.session_state['processed_cases'] if st.session_state['copy_processed'] else ""
 if option == '命名实体识别专家':
     input_value = st.sidebar.text_area("请输入需要进行命名实体识别的法律文本:", value=input_area_default)
-elif option == '法律支持':
-    input_value = st.sidebar.text_area("请输入您要咨询的法律问题：", value=input_area_default)
+# elif option == '法律支持':
+#     input_value = st.sidebar.text_area("请输入您要咨询的法律问题：", value=input_area_default)
 elif option == '法律文本续写':
     input_value = st.sidebar.text_area("请输入‘诉讼请求’和‘审理查明’部分内容，模型将回复生成‘本院认为’部分内容:", value=input_area_default)
 elif option == '法律文书摘要生成':
