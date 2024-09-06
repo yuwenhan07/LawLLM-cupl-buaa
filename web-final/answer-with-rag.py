@@ -1,12 +1,13 @@
 import streamlit as st
 import os
+# 设置环境变量
+os.environ["CUDA_VISIBLE_DEVICES"] = "0,1"
+
 import faiss
 import torch
 from transformers import AutoTokenizer, AutoModel, AutoModelForCausalLM
 import numpy as np
 
-# 设置环境变量
-os.environ["CUDA_VISIBLE_DEVICES"] = "0,1"
 
 # 路径设置
 tokenizer_path = "../BAAI_bge-m3"
@@ -110,14 +111,17 @@ st.markdown(
         font-size: 20px;
         padding: 10px;
     }
-    .stTextInput>div>div>input {
-        padding: 15px;
-        font-size: 18px;
-        border-radius: 10px;
-        border: 2px solid #2583E5;
-        background-color: #f9f9f9;
+
+    .css-1q8dd3e {
+        font-size: 20px;
+        padding: 10px;
     }
-    /* 设置加载中的样式 */
+    .stTextInput>div>div>input {
+        padding: 10px;
+    }
+    .stButton>button {
+        padding: 10px 20px;
+    }
     .stSpinner {
         color: #2583E5;
     }
@@ -129,10 +133,8 @@ st.markdown(
             color: white;  /* 文字颜色为白色 */
             text-align: center;  /* 文字居中对齐 */
             padding: 10px;  /* 内边距为10像素 */
-            background: #2583E5;  /* 背景颜色为深蓝色 */
-            box-shadow: 0px -2px 6px rgba(0, 0, 0, 0.1); /* 添加上方阴影 */
+            background: #2583E5;  /* 背景颜色为蓝色 */
     }
-    
     .stMarkdown {
         font-size: 18px;
     }
@@ -154,7 +156,7 @@ if query:
 # Custom footer
 footer_html = """
     <div class="footer">
-        <p>Developed by ZGZF&BUAA</p>
+        <p>Developed by CUPL&BUAA</p>
     </div>
 """
 st.markdown(footer_html, unsafe_allow_html=True)

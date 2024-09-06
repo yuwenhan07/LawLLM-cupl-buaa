@@ -1,5 +1,5 @@
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "2"
+os.environ["CUDA_VISIBLE_DEVICES"] = "3"
 
 import streamlit as st
 import torch
@@ -9,10 +9,12 @@ import re
 from random import shuffle
 
 import json
+device = torch.device('cuda')
 
 def dict_to_markdown_table_from_str(data_str):
     # Parse the string input into a Python list of dictionaries
     data = json.loads(data_str)
+    
     
     # Creating the markdown table header
     markdown_table = "<table style='font-size:18px;'>"
@@ -31,10 +33,20 @@ def dict_to_markdown_table_from_str(data_str):
 # 定义预测函数
 def predict(messages, model, tokenizer, device):
     text = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
-    model_inputs = tokenizer([text], return_tensors="pt").to(device)
+    
+    # 将输入张量移动到指定的设备
+    model_inputs = tokenizer([text], return_tensors="pt").to(device)  # 将输入移到相同的设备上
 
+    # 确保模型在相同的设备上
+    model = model.to(device)
+
+    # 生成结果
     generated_ids = model.generate(model_inputs.input_ids, max_new_tokens=512)
+    
+    # 处理生成的id
     generated_ids = [output_ids[len(input_ids):] for input_ids, output_ids in zip(model_inputs.input_ids, generated_ids)]
+    
+    # 解码生成的文本
     response = tokenizer.batch_decode(generated_ids, skip_special_tokens=True)[0]
 
     return response
@@ -184,7 +196,8 @@ elif option == '法律文书摘要生成':
     input_value = st.sidebar.text_area("请输入需要进行摘要的法律文书:", value=input_area_default)
 
 if st.sidebar.button('运行'):
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    # device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    device = torch.device('cuda')
     with st.spinner('正在加载模型并生成答案'):
         if option == '命名实体识别专家':
             model, tokenizer = load_models_and_tokenizers("../finetune/output/NER/checkpoint-800")
@@ -247,7 +260,7 @@ else:
 # Custom footer
 footer_html = """
     <div class="footer">
-        <p>Developed by ZGZF&BUAA</p>
+        <p>Developed by CUPL&BUAA</p>
     </div>
 """
 st.markdown(footer_html, unsafe_allow_html=True)

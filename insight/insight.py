@@ -1,6 +1,6 @@
 import os
 from transformers import AutoTokenizer, AutoModelForCausalLM
-os.environ["CUDA_VISIBLE_DEVICES"] = "3"
+os.environ["CUDA_VISIBLE_DEVICES"] = "6"
 import json
 import difflib
 import torch
@@ -20,7 +20,7 @@ from itertools import islice
 def chatchat(content):
     inputs = tokenizer.apply_chat_template([{"role": "user", "content": content}], add_generation_prompt=True, tokenize=True, return_tensors="pt", return_dict=True)
     inputs = inputs.to(device)
-    gen_kwargs = {"max_length": 2500, "do_sample": True, "top_k": 60}
+    gen_kwargs = {"max_length": 2500, "do_sample": False}
     with torch.no_grad():
         outputs = model.generate(**inputs, **gen_kwargs)
         outputs = outputs[:, inputs['input_ids'].shape[1]:]
@@ -317,7 +317,7 @@ def main():
     ''', unsafe_allow_html=True)
 
         case_info["analyze"] = analyze_elements(case_info)
-        shortened_analyze = case_info["analyze"][:125] + "..." + case_info["analyze"][-125:]
+        shortened_analyze = case_info["analyze"]
         placeholder1.markdown('<div style="background-color:#f0f0f0; padding:10px; border-radius:5px; margin-bottom: 10px;">'
                             '<h3>构成要件该当性</h3>'
                             '<p>{}</p></div>'.format(shortened_analyze), unsafe_allow_html=True)
@@ -327,7 +327,7 @@ def main():
     <h3 style="font-size: 14px;">正在分析违法性</h3><br>
     {animation_html}''', unsafe_allow_html=True)
         case_info["legality"] = analyze_legality(case_info)
-        shortened_legality = case_info["legality"][:150] + "..." + case_info["legality"][-150:]
+        shortened_legality = case_info["legality"]
         placeholder2.markdown('<div style="background-color:#f0f0f0; padding:10px; border-radius:5px; margin-bottom: 10px;">'
                             '<h3>违法性分析</h3>'
                             '<p>{}</p></div>'.format(shortened_legality), unsafe_allow_html=True)
@@ -337,7 +337,7 @@ def main():
     <h3 style="font-size: 14px;">正在分析有责性</h3><br>
     {animation_html}''', unsafe_allow_html=True)
         case_info["responsibility"] = analyze_responsibility(case_info)
-        shortened_responsibility = case_info["responsibility"][:160] + "..." + case_info["responsibility"][-160:]
+        shortened_responsibility = case_info["responsibility"]
         placeholder3.markdown('<div style="background-color:#f0f0f0; padding:10px; border-radius:5px; margin-bottom: 10px;">'
                             '<h3>有责性分析</h3>'
                             '<p>{}</p></div>'.format(shortened_responsibility), unsafe_allow_html=True)
