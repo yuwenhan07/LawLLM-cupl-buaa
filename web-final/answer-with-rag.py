@@ -110,17 +110,14 @@ st.markdown(
         font-size: 20px;
         padding: 10px;
     }
-
-    .css-1q8dd3e {
-        font-size: 20px;
-        padding: 10px;
-    }
     .stTextInput>div>div>input {
-        padding: 10px;
+        padding: 15px;
+        font-size: 18px;
+        border-radius: 10px;
+        border: 2px solid #2583E5;
+        background-color: #f9f9f9;
     }
-    .stButton>button {
-        padding: 10px 20px;
-    }
+    /* 设置加载中的样式 */
     .stSpinner {
         color: #2583E5;
     }
@@ -132,8 +129,10 @@ st.markdown(
             color: white;  /* 文字颜色为白色 */
             text-align: center;  /* 文字居中对齐 */
             padding: 10px;  /* 内边距为10像素 */
-            background: #2583E5;  /* 背景颜色为蓝色 */
+            background: #2583E5;  /* 背景颜色为深蓝色 */
+            box-shadow: 0px -2px 6px rgba(0, 0, 0, 0.1); /* 添加上方阴影 */
     }
+    
     .stMarkdown {
         font-size: 18px;
     }
